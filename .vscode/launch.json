@@ -1,0 +1,93 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Module 1 — demo (Premiers Pas)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-01",
+      "program": "${workspaceFolder}/Modules/01-Premiers-Pas/Exercices/bin/Debug/net8.0/Module01.Exercices.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Modules/01-Premiers-Pas/Exercices",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Module 2 — demo (Decisions Et Boucles)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-02",
+      "program": "${workspaceFolder}/Modules/02-Decisions-Et-Boucles/Exercices/bin/Debug/net8.0/Module02.Exercices.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Modules/02-Decisions-Et-Boucles/Exercices",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Module 3 — demo (Algorithmie)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-03",
+      "program": "${workspaceFolder}/Modules/03-Algorithmie/Exercices/bin/Debug/net8.0/Module03.Exercices.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Modules/03-Algorithmie/Exercices",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Module 4 — demo (Objet Bases)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-04",
+      "program": "${workspaceFolder}/Modules/04-Objet-Bases/Exercices/bin/Debug/net8.0/Module04.Exercices.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Modules/04-Objet-Bases/Exercices",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Module 5 — demo (Objet Avance)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-05",
+      "program": "${workspaceFolder}/Modules/05-Objet-Avance/Exercices/bin/Debug/net8.0/Module05.Exercices.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Modules/05-Objet-Avance/Exercices",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Module 6 — demo (Collections Et Donnees)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-06",
+      "program": "${workspaceFolder}/Modules/06-Collections-Et-Donnees/Exercices/bin/Debug/net8.0/Module06.Exercices.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Modules/06-Collections-Et-Donnees/Exercices",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Module 7 — demo (Lambda Et LINQ)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-07",
+      "program": "${workspaceFolder}/Modules/07-Lambda-Et-LINQ/Exercices/bin/Debug/net8.0/Module07.Exercices.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Modules/07-Lambda-Et-LINQ/Exercices",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Module 8 — demo (Threading Et Async)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-08",
+      "program": "${workspaceFolder}/Modules/08-Threading-Et-Async/Exercices/bin/Debug/net8.0/Module08.Exercices.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Modules/08-Threading-Et-Async/Exercices",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
+    }
+  ]
+}

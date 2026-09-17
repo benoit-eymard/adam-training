@@ -81,6 +81,15 @@ Si un programme se lance et t'affiche du texte : **tout est prêt.** 🎉
 
 ---
 
+## 5. Et ensuite ?
+
+- [GIT.md](GIT.md) — sauvegarder ton travail (**à lire avant de coder**)
+- [DEBUG.md](DEBUG.md) — le débogueur de VS Code. Tu peux le garder pour le
+  module 2, mais n'attends pas plus : c'est ce qui t'évitera des heures de
+  `Console.WriteLine`.
+
+---
+
 ## 🆘 Problèmes fréquents
 
 **« dotnet n'est pas reconnu »**

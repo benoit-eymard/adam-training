@@ -147,12 +147,14 @@ Dans l'ordre :
 
 1. **Relis le message d'erreur.** Il dit presque toujours la vérité. Le numéro de
    ligne est un indice, pas une accusation.
-2. **Relis la section du COURS** qui parle du concept.
-3. **Regarde le GLOSSAIRE** : [GLOSSAIRE.md](GLOSSAIRE.md)
-4. **Essaie encore 10 minutes.** C'est souvent là que ça se débloque.
-5. **Regarde la solution** — et surtout, comprends *pourquoi* elle marche.
+2. **Pose un point d'arrêt et regarde** ce qui se passe vraiment, au lieu de
+   deviner : [DEBUG.md](DEBUG.md). C'est le réflexe qui change tout.
+3. **Relis la section du COURS** qui parle du concept.
+4. **Regarde le GLOSSAIRE** : [GLOSSAIRE.md](GLOSSAIRE.md)
+5. **Essaie encore 10 minutes.** C'est souvent là que ça se débloque.
+6. **Regarde la solution** — et surtout, comprends *pourquoi* elle marche.
    Recopier sans comprendre ne sert à rien.
-6. **Demande.** Poser une question précise, c'est déjà la moitié de la réponse.
+7. **Demande.** Poser une question précise, c'est déjà la moitié de la réponse.
 
 ---
 
@@ -177,5 +179,6 @@ Dans l'ordre :
 |---------|----------------|
 | [INSTALLATION.md](INSTALLATION.md) | installer VS Code et le SDK .NET |
 | [GIT.md](GIT.md) | sauvegarder ton travail, les branches, se rattraper |
+| [DEBUG.md](DEBUG.md) | le débogueur : arrêter de deviner, regarder à l'intérieur |
 | [PROGRESSION.md](PROGRESSION.md) | ta checklist et ton carnet de bord |
 | [GLOSSAIRE.md](GLOSSAIRE.md) | tout le vocabulaire, des variables au deadlock |
