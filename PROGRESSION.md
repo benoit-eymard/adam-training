@@ -147,7 +147,9 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [ ] Exos 7-10 ⭐⭐ Agréger (`Sum`, `Average`, `MaxBy`, `Count`)
 - [ ] Exos 11-13 ⭐⭐ Trier et tester (`OrderBy`, `Any`, `All`)
 - [ ] Exos 14-19 ⭐⭐⭐ Enchaîner (`GroupBy`, `Take`, `string.Join`)
-- [ ] **Les 48 tests passent**
+- [ ] Exos 20-22 ⭐⭐⭐ `Aggregate` : le « reduce » général
+- [ ] Exos 23-24 ⭐⭐ `SelectMany` et `Zip`
+- [ ] **Les 65 tests passent**
 - [ ] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI — Le Tableau de Bord de la Guilde
 - [ ] 🔍 Pull Request ouverte, relue et fermée

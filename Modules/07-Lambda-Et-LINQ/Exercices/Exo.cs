@@ -355,4 +355,130 @@ public static class Exo
         // TODO:
         return "";
     }
+
+    // ═══════════════════════════════════════════════════════════
+    //  PARTIE F — Aggregate (le « reduce ») et les derniers outils
+    // ═══════════════════════════════════════════════════════════
+
+    // ───────────────────────────────────────────────────────────────
+    //  EXERCICE 20 ⭐⭐ — Sum, réécrit avec Aggregate
+    //
+    //  Additionne tous les nombres, SANS utiliser .Sum().
+    //
+    //  SommeAvecAggregate([3, 1, 4])  → 8
+    //  SommeAvecAggregate([])         → 0
+    //
+    //  ⚠️ Utilise la version AVEC valeur de départ (le "seed"),
+    //     sinon une liste vide fait planter le programme :
+    //         nombres.Aggregate(0, (total, n) => ...)
+    //                           ↑ on part de 0
+    //
+    //  💡 (total, n) se lit : « le total accumulé jusqu'ici, et
+    //     l'élément courant ». Tu retournes le nouveau total.
+    // ───────────────────────────────────────────────────────────────
+    public static int SommeAvecAggregate(List<int> nombres)
+    {
+        // TODO:
+        return 0;
+    }
+
+
+    // ───────────────────────────────────────────────────────────────
+    //  EXERCICE 21 ⭐⭐⭐ — Le chemin
+    //
+    //  Assemble des étapes en un chemin lisible, séparé par " > ".
+    //
+    //  Chemin(["Entrée", "Couloir", "Trésor"]) → "Entrée > Couloir > Trésor"
+    //  Chemin(["Entrée"])                      → "Entrée"
+    //  Chemin([])                              → ""
+    //
+    //  ⚠️ Ici, utilise Aggregate SANS seed :
+    //         etapes.Aggregate((a, b) => a + " > " + b)
+    //     Comme ça, le séparateur n'apparaît qu'ENTRE les étapes.
+    //
+    //  ⚠️ MAIS Aggregate sans seed PLANTE sur une liste vide
+    //     (InvalidOperationException). Il te faut donc une garde.
+    //
+    //  💡 Oui, string.Join(" > ", etapes) ferait pareil en plus
+    //     simple — et c'est ce qu'on utiliserait en vrai. L'exercice
+    //     est là pour comprendre Aggregate. 😉
+    // ───────────────────────────────────────────────────────────────
+    public static string Chemin(List<string> etapes)
+    {
+        // TODO:
+        return "";
+    }
+
+
+    // ───────────────────────────────────────────────────────────────
+    //  EXERCICE 22 ⭐⭐⭐ — MaxBy, réécrit avec Aggregate
+    //
+    //  Le héros de plus haut niveau, SANS utiliser MaxBy ni OrderBy.
+    //  null si l'équipe est vide.
+    //  En cas d'égalité, le PREMIER rencontré.
+    //
+    //  💡 Le seed peut être null ! Il faut alors préciser le type :
+    //         equipe.Aggregate((Heros)null, (meilleur, h) => ...)
+    //
+    //  💡 Dans la lambda, l'opérateur ternaire fait le travail :
+    //         meilleur == null || h.Niveau > meilleur.Niveau
+    //             ? h
+    //             : meilleur
+    //
+    //  ⚠️ Attention à l'égalité : avec > (strict), le premier garde
+    //     l'avantage. Avec >=, ce serait le dernier.
+    // ───────────────────────────────────────────────────────────────
+    public static Heros LePlusFortAvecAggregate(List<Heros> equipe)
+    {
+        // TODO:
+        return null;
+    }
+
+
+    // ───────────────────────────────────────────────────────────────
+    //  EXERCICE 23 ⭐⭐ — Tous les objets de l'équipe
+    //
+    //  Chaque héros a une liste d'objets (propriété Objets).
+    //  Retourne TOUS les objets de l'équipe, SANS doublon, triés
+    //  par ordre alphabétique.
+    //
+    //  Sur l'équipe d'exemple :
+    //     ["Arc", "Bâton", "Bouclier", "Épée", "Grimoire", "Potion"]
+    //
+    //  ⚠️ .Select(h => h.Objets) donnerait une liste DE LISTES.
+    //     C'est SelectMany qu'il te faut, pour aplatir.
+    //
+    //  💡 Trois étapes enchaînées : aplatir, dédoublonner, trier.
+    //
+    //  💡 Remarque où se range "Épée" : juste après "Bouclier", et
+    //     pas à la fin. OrderBy trie comme un dictionnaire (É se
+    //     classe avec E), et non par code de caractère. C'est ce
+    //     qu'attend un lecteur humain.
+    // ───────────────────────────────────────────────────────────────
+    public static List<string> TousLesObjets(List<Heros> equipe)
+    {
+        // TODO:
+        return new List<string>();
+    }
+
+
+    // ───────────────────────────────────────────────────────────────
+    //  EXERCICE 24 ⭐⭐ — Les duels
+    //
+    //  Marie deux équipes deux par deux : le 1er contre le 1er,
+    //  le 2e contre le 2e, etc.
+    //
+    //  Duels([Thorin, Elyra], [Gobelin, Orc])
+    //     → ["Thorin vs Gobelin", "Elyra vs Orc"]
+    //
+    //  ⚠️ Si les équipes n'ont pas la même taille, on s'arrête à la
+    //     plus courte — Zip le fait tout seul, aucune garde à écrire.
+    //
+    //  💡 gauche.Zip(droite, (a, b) => $"{a.Nom} vs {b.Nom}")
+    // ───────────────────────────────────────────────────────────────
+    public static List<string> Duels(List<Heros> gauche, List<Heros> droite)
+    {
+        // TODO:
+        return new List<string>();
+    }
 }

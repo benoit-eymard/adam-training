@@ -386,6 +386,162 @@ l'autre existe, tu la croiseras.
 
 ---
 
+## 10. Les trois verbes universels : map, filter, reduce
+
+Tu viens d'apprendre LINQ. Ce que tu ne sais pas encore, c'est que tu viens
+d'apprendre **beaucoup plus que du C#**.
+
+Ces trois opérations existent dans **tous** les langages modernes, sous des noms
+différents :
+
+| L'idée | C# | JavaScript | Python |
+|--------|-----|-----------|--------|
+| **map** — transformer chaque élément | `.Select()` | `.map()` | `map()` |
+| **filter** — n'en garder que certains | `.Where()` | `.filter()` | `filter()` |
+| **reduce** — tout réduire à une valeur | `.Aggregate()` | `.reduce()` | `reduce()` |
+
+**Le jour où tu apprendras JavaScript ou Python, tu sauras déjà faire ça.** Les
+noms changent, l'idée est la même. C'est un des concepts les plus transférables
+de toute la programmation.
+
+```csharp
+// C#
+equipe.Where(h => h.EstVivant).Select(h => h.Nom)
+```
+```javascript
+// JavaScript — c'est le MÊME code
+equipe.filter(h => h.estVivant).map(h => h.nom)
+```
+
+---
+
+## 11. `Aggregate` : le reduce général
+
+Tu connais déjà `Sum`, `Count`, `Average`, `Max`. Ce sont tous des **reduce
+spécialisés** : ils prennent une collection et la réduisent à **une seule
+valeur**.
+
+`Aggregate`, c'est le reduce **générique** : celui qui permet de fabriquer tous
+les autres.
+
+```csharp
+int somme = nombres.Aggregate((total, n) => total + n);
+```
+
+Comment ça marche : on prend les éléments **deux par deux**, en gardant le
+résultat au fur et à mesure.
+
+```
+[3, 1, 4, 1, 5]
+
+  total=3, n=1  →  4
+  total=4, n=4  →  8
+  total=8, n=1  →  9
+  total=9, n=5  →  14      ✅
+```
+
+C'est **exactement** l'accumulateur du module 3 — mais en une ligne, et sans
+écrire la boucle.
+
+### Avec une valeur de départ (le *seed*)
+
+```csharp
+int somme = nombres.Aggregate(0, (total, n) => total + n);
+//                            ↑ on part de 0
+```
+
+Deux différences, et elles comptent :
+
+| | Sans seed | Avec seed |
+|---|---|---|
+| Valeur de départ | le **premier élément** | celle que tu donnes |
+| Sur une collection **vide** | 💥 `InvalidOperationException` | ✅ rend le seed |
+| Type du résultat | forcément celui des éléments | **ce que tu veux** |
+
+Le seed permet de **changer de type** en chemin :
+
+```csharp
+// De List<Heros> vers un string
+string noms = equipe.Aggregate("", (texte, h) => texte + h.Nom + " ");
+
+// De List<Heros> vers un int
+int orTotal = equipe.Aggregate(0, (total, h) => total + h.Or);
+```
+
+> ⚠️ **En vrai, utilise `Sum` quand `Sum` suffit.** `Aggregate` est plus
+> puissant, mais moins lisible : personne ne devine au premier coup d'œil ce que
+> fait `Aggregate(0, (a, b) => a + b)`, alors que `Sum()` se lit tout seul.
+>
+> `Aggregate` sert quand **aucune méthode spécialisée n'existe** pour ce que tu
+> veux faire.
+
+### Reconstruire les autres avec `Aggregate`
+
+C'est un excellent exercice mental — ça montre que tout le reste n'est qu'un cas
+particulier :
+
+```csharp
+nombres.Aggregate(0, (t, n) => t + n)                      // Sum
+nombres.Aggregate(0, (t, n) => t + 1)                      // Count
+nombres.Aggregate(1, (t, n) => t * n)                      // le produit
+nombres.Aggregate((max, n) => n > max ? n : max)           // Max
+mots.Aggregate("", (texte, m) => texte + m)                // string.Concat
+```
+
+---
+
+## 12. Trois derniers outils
+
+### `SelectMany` : aplatir
+
+`Select` rend une liste **de listes**. `SelectMany` les **fusionne en une
+seule**.
+
+```csharp
+// Chaque héros a une liste d'objets
+equipe.Select(h => h.Objets)       // List<List<string>>  😩
+equipe.SelectMany(h => h.Objets)   // List<string>        ✅
+```
+
+```
+Thorin  : ["Épée", "Bouclier"]
+Elyra   : ["Bâton", "Potion"]        SelectMany
+Brunhild: ["Épée"]                   ─────────►  ["Épée", "Bouclier", "Bâton",
+                                                  "Potion", "Épée"]
+```
+
+Dès que tu te retrouves avec une liste de listes, c'est `SelectMany` qu'il te
+fallait.
+
+### `Zip` : marier deux collections
+
+Comme une fermeture éclair : il prend le 1er de chaque, le 2e de chaque, etc.
+
+```csharp
+var gauche = new[] { "Thorin", "Elyra" };
+var droite = new[] { "Gobelin", "Orc" };
+
+gauche.Zip(droite, (a, b) => $"{a} vs {b}")
+// ["Thorin vs Gobelin", "Elyra vs Orc"]
+```
+
+⚠️ Il s'arrête à **la plus courte** des deux. Trois à gauche et deux à droite →
+deux résultats, sans erreur.
+
+### `Distinct` : supprimer les doublons
+
+```csharp
+new[] { "Épée", "Potion", "Épée" }.Distinct()    // ["Épée", "Potion"]
+```
+
+L'exercice 2 du module 6 (`SansDoublons`), en une méthode. 😄
+
+> 💡 `Distinct` s'appuie sur `Equals` et `GetHashCode` (module 4, section 10) !
+> Sur tes propres classes, il ne fonctionnera correctement que si tu les as
+> redéfinis — ou si tu as utilisé un `record`. Tout est lié.
+
+---
+
 ## 🎯 Récapitulatif
 
 | Je veux... | LINQ |
@@ -402,6 +558,13 @@ l'autre existe, tu la croiseras.
 | Tous ? | `.All(x => ...)` |
 | Regrouper | `.GroupBy(x => ...)` |
 | Matérialiser | `.ToList()` |
+| Tout réduire à une valeur | `.Aggregate(seed, (acc, x) => ...)` |
+| Aplatir une liste de listes | `.SelectMany(x => ...)` |
+| Marier deux collections | `.Zip(autre, (a, b) => ...)` |
+| Supprimer les doublons | `.Distinct()` |
+
+**Les trois verbes universels** : `Select` = **map**, `Where` = **filter**,
+`Aggregate` = **reduce**. Les mêmes en JavaScript, Python, Java…
 
 **Une lambda** : `parametre => resultat`
 **`Func<A, B>`** : prend un A, rend un B

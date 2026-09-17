@@ -343,3 +343,123 @@ public class LeMomentOuTuComprends
         // Et ce serait bien moins clair. 🪄
     }
 }
+
+public class PartieF_Aggregate
+{
+    [Fact] public void Somme_simple() => Assert.Equal(8, Exo.SommeAvecAggregate(new List<int> { 3, 1, 4 }));
+    [Fact] public void Somme_un_seul() => Assert.Equal(42, Exo.SommeAvecAggregate(new List<int> { 42 }));
+    [Fact] public void Somme_negatifs() => Assert.Equal(-2, Exo.SommeAvecAggregate(new List<int> { 3, -5 }));
+
+    [Fact]
+    public void Somme_liste_vide_ne_plante_pas()
+    {
+        // Sans seed, Aggregate leverait une InvalidOperationException ici.
+        Assert.Equal(0, Exo.SommeAvecAggregate(new List<int>()));
+    }
+
+    [Fact]
+    public void Chemin_complet()
+    {
+        Assert.Equal("Entrée > Couloir > Trésor",
+            Exo.Chemin(new List<string> { "Entrée", "Couloir", "Trésor" }));
+    }
+
+    [Fact]
+    public void Chemin_une_seule_etape_sans_separateur()
+    {
+        Assert.Equal("Entrée", Exo.Chemin(new List<string> { "Entrée" }));
+    }
+
+    [Fact]
+    public void Chemin_vide_ne_plante_pas()
+    {
+        Assert.Equal("", Exo.Chemin(new List<string>()));
+    }
+
+    [Fact]
+    public void LePlusFortAvecAggregate()
+    {
+        Assert.Equal("Kaelis", Exo.LePlusFortAvecAggregate(Equipes.Exemple()).Nom);
+    }
+
+    [Fact]
+    public void LePlusFortAvecAggregate_equipe_vide()
+    {
+        Assert.Null(Exo.LePlusFortAvecAggregate(new List<Heros>()));
+    }
+
+    [Fact]
+    public void LePlusFortAvecAggregate_en_cas_d_egalite_le_premier()
+    {
+        var equipe = new List<Heros>
+        {
+            new Heros("A", "Mage", 10, 10, 0),
+            new Heros("B", "Mage", 10, 10, 0)
+        };
+        Assert.Equal("A", Exo.LePlusFortAvecAggregate(equipe).Nom);
+    }
+
+    [Fact]
+    public void LePlusFortAvecAggregate_donne_le_meme_resultat_que_MaxBy()
+    {
+        var equipe = Equipes.Exemple();
+        Assert.Equal(equipe.MaxBy(h => h.Niveau).Nom,
+                     Exo.LePlusFortAvecAggregate(equipe).Nom);
+    }
+}
+
+public class PartieF_SelectMany_et_Zip
+{
+    [Fact]
+    public void TousLesObjets_aplatit_dedoublonne_et_trie()
+    {
+        // Remarque l'ordre : "Épée" se range juste apres "Bouclier".
+        // OrderBy trie LINGUISTIQUEMENT (E accentue ~ E), pas par code
+        // de caractere. C'est ce qu'attend un lecteur humain.
+        var attendu = new List<string> { "Arc", "Bâton", "Bouclier", "Épée", "Grimoire", "Potion" };
+        Assert.Equal(attendu, Exo.TousLesObjets(Equipes.Exemple()));
+    }
+
+    [Fact]
+    public void TousLesObjets_equipe_vide()
+    {
+        Assert.Empty(Exo.TousLesObjets(new List<Heros>()));
+    }
+
+    [Fact]
+    public void TousLesObjets_sans_aucun_objet()
+    {
+        var equipe = new List<Heros> { new Heros("A", "Mage", 1, 10, 0) };
+        Assert.Empty(Exo.TousLesObjets(equipe));
+    }
+
+    [Fact]
+    public void Duels()
+    {
+        var gauche = new List<Heros> { new Heros("Thorin", "Guerrier", 1, 10, 0),
+                                       new Heros("Elyra", "Mage", 1, 10, 0) };
+        var droite = new List<Heros> { new Heros("Gobelin", "Monstre", 1, 10, 0),
+                                       new Heros("Orc", "Monstre", 1, 10, 0) };
+
+        Assert.Equal(new List<string> { "Thorin vs Gobelin", "Elyra vs Orc" },
+                     Exo.Duels(gauche, droite));
+    }
+
+    [Fact]
+    public void Duels_s_arrete_a_la_plus_courte()
+    {
+        var gauche = new List<Heros> { new Heros("A", "Mage", 1, 10, 0),
+                                       new Heros("B", "Mage", 1, 10, 0),
+                                       new Heros("C", "Mage", 1, 10, 0) };
+        var droite = new List<Heros> { new Heros("X", "Mage", 1, 10, 0) };
+
+        Assert.Single(Exo.Duels(gauche, droite));
+        Assert.Equal("A vs X", Exo.Duels(gauche, droite)[0]);
+    }
+
+    [Fact]
+    public void Duels_avec_une_equipe_vide()
+    {
+        Assert.Empty(Exo.Duels(new List<Heros>(), Equipes.Exemple()));
+    }
+}
