@@ -77,6 +77,30 @@ rattraper** quand tu fais une bêtise (ça arrivera, c'est normal).
 
 ---
 
+## 🔍 La relecture de fin de module
+
+Quand un module est terminé, tu ouvres une **Pull Request** sur GitHub. C'est
+une conversation autour de ton code : Benoît le relit, commente les lignes qui
+l'intriguent, et tu réponds.
+
+C'est la partie la plus formatrice du parcours. **Tous** les développeurs
+professionnels travaillent comme ça, tous les jours.
+
+| | |
+|---|---|
+| **Quand ?** | à la fin de chaque module, défi compris |
+| **Base de la PR** | la branche du module **précédent** (`main` pour le module 1) |
+| **À remplir** | le modèle s'affiche tout seul — surtout la section **« Mes questions »** |
+| **À la fin** | **Close**, jamais **Merge** — `main` doit rester le cours vierge |
+
+> ⚠️ Une PR n'est pas un examen. Recevoir des remarques sur son code, c'est le
+> quotidien du métier — pas une sanction. Et tu as le droit de ne pas être
+> d'accord, à condition d'expliquer pourquoi. 😉
+
+Le mode d'emploi complet est dans [GIT.md, section 13](GIT.md#13--la-pull-request--faire-relire-son-code).
+
+---
+
 ## 🔁 Comment fonctionne un module
 
 Chaque module suit toujours le même rythme :
@@ -91,6 +115,7 @@ Chaque module suit toujours le même rythme :
 💡 SOLUTIONS.md    →  Tu compares avec la correction commentée.
 🏆 DEFI.md         →  Un mini-projet libre pour valider le module.
 🌿 git push        →  Ton travail est en sécurité sur GitHub.
+🔍 Pull Request    →  Tu fais relire ton code, tu poses tes questions.
 ```
 
 ### Les trois commandes à retenir
@@ -141,6 +166,8 @@ Dans l'ordre :
 - **Commite dès que les tests sont verts**, et pousse à la fin de chaque séance.
   Un disque dur, ça meurt. Ton travail sur GitHub, non.
 - **Ne travaille jamais sur `main`.** Une branche par module.
+- **Ouvre une Pull Request à la fin de chaque module**, et pose tes questions
+  dedans. C'est fait pour.
 
 ---
 

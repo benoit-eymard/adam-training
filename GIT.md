@@ -397,6 +397,7 @@ git push
 | Aller sur une branche existante | `git switch module-1` |
 | Revenir au cours vierge | `git switch main` |
 | Publier une nouvelle branche | `git push -u origin module-2` |
+| Faire relire un module fini | ouvrir une PR sur GitHub (§13) |
 
 ### Regarder
 
@@ -417,14 +418,171 @@ git push
 
 ---
 
-## 13. Pour plus tard
+## 13. 🔍 La Pull Request : faire relire son code
+
+À la fin de chaque module, tu vas ouvrir une **Pull Request** (PR). C'est le
+moment où tu dis : *« j'ai fini, viens voir ce que j'ai fait »*.
+
+Une PR, c'est **une conversation autour de ton code**. GitHub affiche
+exactement ce que tu as changé, ligne par ligne, et Benoît peut commenter
+**directement sur une ligne précise** :
+
+> 💬 *ligne 42 — ici tu pourrais utiliser `Math.Max` au lieu du `if`, ça fait
+> la même chose en plus court. Qu'est-ce que tu en penses ?*
+
+C'est **exactement comme ça que travaillent tous les développeurs du monde**.
+Personne ne pousse du code sans le faire relire. Même les plus expérimentés —
+surtout eux, en fait.
+
+### ⚠️ Ici, on ne FUSIONNE jamais la PR
+
+Normalement, une PR finit par être *mergée* (fusionnée) dans `main`. **Pas ici.**
+
+Parce que `main` doit rester le cours vierge. Si on fusionnait ta PR, tes
+réponses atterriraient dans le cours et le détruiraient — exactement ce qu'on
+cherche à éviter depuis le début.
+
+👉 **Ta PR sert uniquement à la relecture.** Quand la discussion est finie, on la
+**ferme** sans fusionner. Ton travail reste sur ta branche, bien au chaud.
+
+> 🧠 Retiens ça : une Pull Request et un merge sont **deux choses séparées**.
+> La PR, c'est la conversation. Le merge, c'est une décision qui vient après —
+> et qu'on peut très bien ne jamais prendre.
+
+### Ouvrir sa PR
+
+**1.** Assure-toi d'avoir tout poussé :
+
+```bash
+git status
+```
+```bash
+git push
+```
+
+**2.** Va sur https://github.com/benoit-eymard/adam-training
+
+GitHub affiche un bandeau jaune : **« module-1 had recent pushes »** avec un
+bouton **Compare & pull request**. Clique dessus.
+
+*(Pas de bandeau ? Onglet **Pull requests** → bouton vert **New pull request**.)*
+
+**3.** ⚠️ **Règle la branche de base.** Tout en haut, tu vois :
+
+```
+base: main  ←  compare: module-2
+```
+
+- Pour le **module 1** : laisse `base: main` ✅
+- Pour les **modules 2 à 8** : clique sur `base: main` et choisis la branche du
+  **module précédent** (`module-1` pour le module 2, etc.)
+
+**Pourquoi ?** Parce que tes branches sont chaînées. Si tu laisses `main`, la PR
+du module 5 affichera aussi tout ton travail des modules 1 à 4 — illisible.
+En prenant la branche précédente, la PR ne montre **que le nouveau module**.
+
+**4.** Remplis le titre et la description, puis **Create pull request**.
+
+### Le titre et la description
+
+Le titre, simple et clair :
+
+```
+Module 2 : décisions et boucles
+```
+
+La description se remplit toute seule à partir d'un modèle. Tu n'as qu'à cocher
+et compléter :
+
+```markdown
+## Ce que j'ai fait
+- Les 7 exercices du module 2
+- Le défi : le Juste Prix, avec le mode « l'ordinateur devine »
+
+## Tests
+- [x] `dotnet test Tests` : 48/48 ✅
+
+## Ce qui m'a bloqué
+La barre de vie. Je divisais avant de multiplier, et j'avais toujours 0.
+
+## Mes questions
+- Est-ce que mon `switch` est mieux que mes `if` ? Je n'arrive pas à choisir.
+- Ma méthode `Jouer()` fait 40 lignes, c'est trop long non ?
+```
+
+> 💡 **La section « Mes questions » est la plus importante.** C'est là que tu
+> apprends le plus. Une PR sans question, c'est une occasion gâchée.
+
+### Répondre aux commentaires
+
+Benoît va laisser des remarques. **Ce ne sont pas des reproches** — c'est le
+principe même de l'exercice, et ça arrive à tout le monde, toute sa carrière.
+
+Pour chaque commentaire, tu as trois réponses possibles, toutes valables :
+
+| Réponse | Quand |
+|---------|-------|
+| **Je corrige** | tu es d'accord → tu modifies le code |
+| **Je demande** | tu n'as pas compris → *« pourquoi c'est mieux ? »* |
+| **Je ne suis pas d'accord** | tu as une raison → explique-la ! |
+
+La troisième est parfaitement légitime. Un relecteur peut se tromper, ou ne pas
+avoir vu ton intention. **Défends ton code si tu as un argument** — c'est comme
+ça qu'on progresse, des deux côtés.
+
+Pour corriger, tu n'ouvres **pas** une nouvelle PR : tu travailles normalement
+sur ta branche.
+
+```bash
+git add .
+```
+```bash
+git commit -m "Simplifie le calcul des dégâts suite à la relecture"
+```
+```bash
+git push
+```
+
+**La PR se met à jour toute seule.** ✨ C'est ça qui rend les PR si pratiques.
+
+Quand un point est réglé, clique sur **Resolve conversation** sous le
+commentaire. La discussion se replie : on voit d'un coup d'œil ce qu'il reste.
+
+### Fermer la PR
+
+Quand tout est réglé et que Benoît a validé :
+
+1. Tu coches le module dans [PROGRESSION.md](PROGRESSION.md)
+2. Tu cliques sur **Close pull request** (en bas, à côté du champ de commentaire)
+3. ⚠️ **Surtout pas** sur le gros bouton vert **Merge pull request** !
+
+La PR fermée reste consultable pour toujours. Dans six mois, tu pourras relire
+tes propres questions de débutant et mesurer le chemin parcouru. C'est plus
+gratifiant qu'on ne le croit. 😊
+
+### 🧑‍🏫 Côté relecteur (pour Benoît)
+
+Quelques repères pour que la relecture reste un plaisir :
+
+- **Commence par ce qui est bien.** Toujours. Un ado qui ne reçoit que des
+  critiques arrête au bout de trois modules.
+- **Maximum 3 ou 4 remarques par PR.** Au-delà, c'est décourageant et il ne
+  retient rien. Garde le reste pour la prochaine fois.
+- **Pose des questions plutôt que des ordres.** *« Pourquoi as-tu choisi un
+  `while` ici ? »* fait plus réfléchir que *« mets un `for` »*.
+- **Distingue le bloquant du facultatif.** Une convention : préfixe par
+  `nit:` (*nitpick*) ce qui n'est qu'une préférence, pas un vrai problème.
+- **Si les tests passent, le code est correct.** Le reste, c'est du style — et
+  le style se discute, il ne s'impose pas.
+
+---
+
+## 14. Pour plus tard
 
 Quand tu seras à l'aise, il te restera à découvrir :
 
 - **`git pull`** — récupérer les changements faits par quelqu'un d'autre
 - **`git merge`** — fusionner deux branches
-- **les Pull Requests** — sur GitHub, proposer ton travail et le faire relire
-  (c'est comme ça que fonctionne **tout** le logiciel libre)
 - **`git stash`** — mettre son travail de côté 5 minutes
 - **`git bisect`** — trouver automatiquement le commit qui a introduit un bug 🕵️
 
@@ -445,6 +603,22 @@ git status
 git add .
 git commit -m "Module 1 : exercice 3 terminé"
 git push
+```
+
+Et à la fin du module :
+
+```bash
+# 1. Tout est poussé ?
+git status
+
+# 2. Ouvre la Pull Request sur GitHub
+#    base = la branche du module précédent (main pour le module 1)
+#    -> Benoît relit, tu réponds, tu corriges
+#    -> puis CLOSE (jamais Merge !)
+
+# 3. Et on enchaîne
+git switch -c module-2
+git push -u origin module-2
 ```
 
 **Commite souvent. Pousse souvent. Ne touche jamais à `main`.**

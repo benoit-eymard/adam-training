@@ -4,7 +4,10 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 
 > 🌿 **Avant de commencer un module**, crée sa branche depuis la précédente :
 > `git switch -c module-N` puis `git push -u origin module-N`.
-> Jamais de travail sur `main` ! Voir [GIT.md](GIT.md).
+> Jamais de travail sur `main` !
+>
+> 🔍 **À la fin de chaque module**, ouvre une Pull Request pour faire relire
+> ton code (base = la branche du module précédent). Voir [GIT.md](GIT.md).
 
 ---
 
@@ -22,6 +25,7 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [ ] **Les 20 tests passent** (`dotnet test Tests`)
 - [ ] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI — Générateur de fiche de personnage
+- [ ] 🔍 Pull Request ouverte, relue et fermée
 
 ---
 
@@ -41,6 +45,7 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [ ] **Les 48 tests passent**
 - [ ] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI — Le Juste Prix
+- [ ] 🔍 Pull Request ouverte, relue et fermée
 
 ---
 
@@ -60,6 +65,7 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [ ] **Les 49 tests passent**
 - [ ] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI — Le Morpion
+- [ ] 🔍 Pull Request ouverte, relue et fermée
 
 ---
 
@@ -76,6 +82,7 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [ ] **Les 38 tests passent**
 - [ ] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI — L'Arène
+- [ ] 🔍 Pull Request ouverte, relue et fermée
 
 ---
 
@@ -93,6 +100,7 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [ ] **Les 49 tests passent**
 - [ ] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI — La Guilde (combat 3 contre 3)
+- [ ] 🔍 Pull Request ouverte, relue et fermée
 
 ---
 
@@ -114,6 +122,7 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [ ] **Les 64 tests passent**
 - [ ] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI — Le Gestionnaire de Guilde
+- [ ] 🔍 Pull Request ouverte, relue et fermée
 
 ---
 
@@ -132,6 +141,7 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [ ] **Les 48 tests passent**
 - [ ] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI — Le Tableau de Bord de la Guilde
+- [ ] 🔍 Pull Request ouverte, relue et fermée
 
 ---
 
@@ -153,6 +163,7 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [ ] **Les 25 tests passent**
 - [ ] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI FINAL — Le Donjon en Temps Réel
+- [ ] 🔍 Pull Request ouverte, relue et fermée
 
 ---
 
