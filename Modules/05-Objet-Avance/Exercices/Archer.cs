@@ -28,14 +28,15 @@ public class Archer : Combattant
     // ───────────────────────────────────────────────────────────────
     //  2.2 — Ses propriétés propres
     //
-    //    Fleches (int) — combien il lui en reste
+    //    Fleches (int) — combien il lui en reste   ✅ déjà écrite
+    //    APlusDeFleches (bool) — à toi de la compléter, juste en dessous
     // ───────────────────────────────────────────────────────────────
 
     public int Fleches { get; private set; }
 
     //  APlusDeFleches : propriété calculée, vraie s'il lui reste au
     //  moins une flèche.
-    // TODO:
+    // TODO: remplace le `false` de la ligne ci-dessous
     public bool APlusDeFleches => false;
 
 

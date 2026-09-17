@@ -11,7 +11,7 @@ namespace Module04;
 public class Personnage
 {
     // ───────────────────────────────────────────────────────────────
-    //  3.1 — Les propriétés
+    //  3.1 — Les propriétés     ✅ DÉJÀ ÉCRITES
     // ───────────────────────────────────────────────────────────────
 
     public string Nom { get; private set; }
@@ -28,14 +28,14 @@ public class Personnage
     // ───────────────────────────────────────────────────────────────
 
     //  EstVivant : vrai tant que PointsDeVie > 0
-    // TODO:
+    // TODO: remplace le `false` de la ligne ci-dessous
     public bool EstVivant => false;
 
     //  PointsDeVieManquants : combien de PV il faudrait pour être
     //  à nouveau au maximum.
     //    100/100 PV → 0
     //     70/100 PV → 30
-    // TODO:
+    // TODO: remplace le `0` de la ligne ci-dessous
     public int PointsDeVieManquants => 0;
 
     //  DegatsTotaux : la Force, PLUS le bonus de l'arme équipée.
@@ -55,7 +55,7 @@ public class Personnage
     //               return ...;
     //           }
     //       }
-    // TODO:
+    // TODO: remplace le `0` de la ligne ci-dessous
     public int DegatsTotaux => 0;
 
 

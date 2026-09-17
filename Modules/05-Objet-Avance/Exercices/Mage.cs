@@ -31,7 +31,7 @@ public class Mage : Combattant, ISoigneur
 
 
     // ───────────────────────────────────────────────────────────────
-    //  3.2 — Ses propriétés propres
+    //  3.2 — Ses propriétés propres     ✅ DÉJÀ ÉCRITES
     // ───────────────────────────────────────────────────────────────
 
     public int Mana { get; private set; }

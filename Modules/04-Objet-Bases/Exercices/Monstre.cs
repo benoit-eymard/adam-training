@@ -8,7 +8,7 @@ namespace Module04;
 public class Monstre
 {
     // ───────────────────────────────────────────────────────────────
-    //  2.1 — Les propriétés
+    //  2.1 — Les propriétés     ✅ DÉJÀ ÉCRITES
     //
     //    Nom           (string) — son nom
     //    PointsDeVie   (int)    — ses PV actuels
@@ -34,7 +34,7 @@ public class Monstre
     //  💡 public bool EstVivant => PointsDeVie > 0;
     // ───────────────────────────────────────────────────────────────
 
-    // TODO: déclare EstVivant
+    // TODO: remplace le `false` de la ligne ci-dessous
     public bool EstVivant => false;
 
 

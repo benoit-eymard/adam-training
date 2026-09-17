@@ -10,25 +10,34 @@ namespace Module04;
 public class Arme
 {
     // ───────────────────────────────────────────────────────────────
-    //  1.1 — Les propriétés
+    //  1.1 — Les propriétés     ✅ DÉJÀ ÉCRITES, rien à faire ici
     //
-    //  Une arme a :
-    //    - un Nom (string), lisible de partout, modifiable seulement
-    //      depuis l'intérieur de la classe
-    //    - un DegatsBonus (int), pareil
+    //  Une arme a un Nom (string) et un DegatsBonus (int).
     //
-    //  💡 Syntaxe : public string Nom { get; private set; }
+    //  Décortique la syntaxe : tu vas la relire tout le module.
+    //
+    //      public string Nom { get; private set; }
+    //
+    //      public       -> visible depuis l'extérieur de la classe
+    //      string       -> le type de la donnée
+    //      Nom          -> son nom, en PascalCase
+    //      get;         -> tout le monde peut LIRE la valeur
+    //      private set; -> seul l'intérieur de la classe peut la MODIFIER
+    //
+    //  ⚠️ Pourquoi sont-elles fournies ? Parce que les tests s'en
+    //     servent. Sans elles, le projet de tests ne compilerait pas du
+    //     tout, et tu aurais une pluie d'erreurs illisibles au lieu de
+    //     résultats exploitables. C'est pareil dans Monstre.cs et
+    //     Personnage.cs : les propriétés sont données, le COMPORTEMENT
+    //     est à toi.
     // ───────────────────────────────────────────────────────────────
 
-    // TODO: déclare la propriété Nom
     public string Nom { get; private set; }
-
-    // TODO: déclare la propriété DegatsBonus
     public int DegatsBonus { get; private set; }
 
 
     // ───────────────────────────────────────────────────────────────
-    //  1.2 — Le compteur static
+    //  1.2 — Le compteur static     ✅ DÉJÀ ÉCRIT
     //
     //  NombreDArmesCreees compte TOUTES les armes créées depuis le
     //  début du programme. Il appartient à la CLASSE, pas à un objet.

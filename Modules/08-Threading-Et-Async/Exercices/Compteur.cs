@@ -17,20 +17,23 @@ public class Compteur
 
 
     // ───────────────────────────────────────────────────────────────
-    //  A.1 — Le verrou
+    //  A.1 — Le verrou     ✅ DÉJÀ ÉCRIT, rien à faire ici
     //
-    //  Déclare un objet privé qui servira de verrou.
+    //  C'est l'objet sur lequel les threads vont faire la queue.
+    //  Observe ses deux mots-clés, ils comptent autant l'un que l'autre :
     //
-    //  ⚠️ Il doit être :
-    //     - private   : personne d'autre ne doit pouvoir s'en servir
-    //     - readonly  : il ne doit JAMAIS être remplacé (sinon deux
-    //                   threads verrouilleraient des objets différents,
-    //                   et la protection ne servirait plus à rien)
+    //    - private  : personne d'autre ne peut s'en servir pour bloquer
+    //                 ta classe pendant des secondes.
     //
-    //  💡 private readonly object _verrou = new object();
+    //    - readonly : il ne peut JAMAIS être remplacé. Si on pouvait le
+    //                 changer en cours de route, deux threads
+    //                 verrouilleraient deux objets DIFFÉRENTS et
+    //                 passeraient tous les deux — la protection
+    //                 s'évanouirait sans le moindre message d'erreur.
+    //
+    //  👉 Ton travail commence en A.2.
     // ───────────────────────────────────────────────────────────────
 
-    // TODO: déclare _verrou
     private readonly object _verrou = new object();
 
 
@@ -40,7 +43,7 @@ public class Compteur
     //  💡 public int Valeur => _valeur;
     // ───────────────────────────────────────────────────────────────
 
-    // TODO:
+    // TODO: remplace le `0` de la ligne ci-dessous
     public int Valeur => 0;
 
 

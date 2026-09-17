@@ -28,16 +28,16 @@ public class Inventaire
 
     //  Nombre : combien d'objets contient l'inventaire
     //  💡 attention : sur une List, c'est .Count (pas .Length !)
-    // TODO:
+    // TODO: remplace le `0` de la ligne ci-dessous
     public int Nombre => 0;
 
     //  EstPlein : vrai quand on a atteint la capacité
-    // TODO:
+    // TODO: remplace le `false` de la ligne ci-dessous
     public bool EstPlein => false;
 
     //  ValeurTotale : la somme des valeurs de tous les objets
     //  💡 le motif de l'accumulateur + un foreach
-    // TODO:
+    // TODO: remplace le `0` de la ligne ci-dessous
     public int ValeurTotale => 0;
 
 

@@ -12,7 +12,7 @@ namespace Module05;
 public class Guerrier : Combattant
 {
     // ───────────────────────────────────────────────────────────────
-    //  1.1 — Ses propriétés PROPRES
+    //  1.1 — Ses propriétés PROPRES     ✅ DÉJÀ ÉCRITES
     //
     //    Force  (int)  — ses dégâts de base
     //    EnRage (bool) — s'il est en rage, sa prochaine attaque
