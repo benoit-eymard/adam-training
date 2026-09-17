@@ -178,6 +178,28 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 
 ---
 
+## Module 9 — Sous le capot : `yield` 🔬
+
+> **Badge : Démystificateur** — LINQ n'est plus une boîte noire.
+
+- [ ] J'ai lu le COURS
+- [ ] J'ai lancé la démo (la méthode qui se met en pause !)
+- [ ] Exo 1 ⭐⭐ `MonWhere` (le *filter*)
+- [ ] Exo 2 ⭐⭐ `MonSelect` (le *map*)
+- [ ] Exo 3 ⭐⭐⭐ `MonTake` — attention à l'ordre du test !
+- [ ] Exo 4 ⭐ `MonCount` (opération terminale)
+- [ ] Exo 5 ⭐⭐⭐ `MonAggregate` (le *reduce*)
+- [ ] Exo 6 ⭐ `Compter`
+- [ ] Exo 7 ⭐⭐ `Repeter`
+- [ ] Exo 8 ⭐⭐⭐ `Naturels` — une séquence INFINIE
+- [ ] Exo 9 ⭐⭐⭐ `Fibonacci` — infinie et instantanée
+- [ ] **Les 45 tests passent**, dont ceux qui prouvent la paresse
+- [ ] J'ai lu les SOLUTIONS
+- [ ] 🏆 DÉFI — Le Générateur de Donjon Infini
+- [ ] 🔍 Pull Request ouverte, relue et fermée
+
+---
+
 ## 🎓 Projet final
 
 - [ ] Mon RPG complet tourne

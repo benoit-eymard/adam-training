@@ -88,6 +88,17 @@
       "cwd": "${workspaceFolder}/Modules/08-Threading-Et-Async/Exercices",
       "console": "integratedTerminal",
       "stopAtEntry": false
+    },
+    {
+      "name": "Module 9 — demo (Yield Et IEnumerable)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-09",
+      "program": "${workspaceFolder}/Modules/09-Yield-Et-IEnumerable/Exercices/bin/Debug/net8.0/Module09.Exercices.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Modules/09-Yield-Et-IEnumerable/Exercices",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
     }
   ]
 }

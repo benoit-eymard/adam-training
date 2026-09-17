@@ -1,6 +1,6 @@
 # 🎮 Apprendre le C# — Parcours complet
 
-Bienvenue ! Ce dépôt est un cours de programmation C# en **8 modules**, conçu pour être
+Bienvenue ! Ce dépôt est un cours de programmation C# en **9 modules**, conçu pour être
 suivi en autonomie, à ton rythme.
 
 Le fil rouge : tu vas construire petit à petit un **jeu de rôle (RPG)** — des
@@ -21,6 +21,7 @@ tu auras un vrai jeu que tu as codé toi-même.
 | 6 | [Collections & données](Modules/06-Collections-Et-Donnees/) | `List`, `Dictionary`, erreurs, fichiers | Inventaire + sauvegarde de partie |
 | 7 | [Lambda & LINQ](Modules/07-Lambda-Et-LINQ/) | Délégués, lambdas, LINQ | Statistiques sur tes parties |
 | 8 | [Threading & async](Modules/08-Threading-Et-Async/) | `Task`, `async`/`await`, concurrence | Un combat en temps réel |
+| 9 | [Sous le capot : `yield`](Modules/09-Yield-Et-IEnumerable/) | `IEnumerable`, générateurs, paresse | Un donjon **infini** |
 
 La difficulté monte progressivement. **Ne saute pas de module** : chacun s'appuie sur
 le précédent.
