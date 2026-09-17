@@ -367,6 +367,10 @@ a == b   // false ! Ce ne sont pas les mêmes boîtes,
          // même si leur contenu est identique.
 ```
 
+> 👉 Ça se répare, et la section 10 explique comment.
+
+
+
 ### `null` : la boîte qui n'existe pas
 
 ```csharp
@@ -411,6 +415,168 @@ première rencontre avec le **polymorphisme** — le grand sujet du module 5.
 
 ---
 
+## 10. Deux objets identiques ne sont pas égaux
+
+Reprenons le fil laissé à la section 8. Ceci est **très** surprenant :
+
+```csharp
+Personnage a = new Personnage("Kaelis", 100, 12);
+Personnage b = new Personnage("Kaelis", 100, 12);
+
+Console.WriteLine(a == b);        // false 🤨
+Console.WriteLine(a.Equals(b));   // false 🤨
+```
+
+Deux personnages **strictement identiques**, et C# dit qu'ils sont différents.
+
+### Pourquoi ?
+
+Parce que par défaut, comparer deux objets compare **les boîtes**, pas leur
+contenu. `a` et `b` sont deux boîtes distinctes en mémoire — donc « différents ».
+
+C'est ce qu'on appelle l'**égalité de référence** : « est-ce le même objet ? »
+
+Et parfois, c'est exactement ce qu'on veut :
+
+```csharp
+if (cible == heros)   // « la cible EST-ELLE le héros ? »
+```
+
+Mais souvent, non :
+
+```csharp
+if (positionJoueur == positionTresor)    // « même case ? » -> toujours false 😱
+if (inventaire.Contains(new Objet("Épée", 50)))   // -> toujours false 😱
+```
+
+> 🔴 C'est une source de bugs très fréquente, parce que le code **a l'air**
+> correct. Rien ne plante : ça répond juste toujours `false`.
+
+### La solution classique : redéfinir `Equals`
+
+```csharp
+public class Position
+{
+    public int Ligne { get; private set; }
+    public int Colonne { get; private set; }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is not Position autre)    // pas une Position ? pas égal
+        {
+            return false;
+        }
+        return Ligne == autre.Ligne && Colonne == autre.Colonne;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Ligne, Colonne);
+    }
+}
+```
+
+```csharp
+new Position(3, 5).Equals(new Position(3, 5));   // true ✅
+```
+
+**Deux remarques importantes :**
+
+**1. `obj is not Position autre`** fait trois choses d'un coup : il vérifie le
+type, il exclut `null`, et il range l'objet dans une variable `autre` du bon
+type. C'est le `is` du module 5, en version négative.
+
+**2. `GetHashCode` doit TOUJOURS accompagner `Equals`.** Le compilateur
+t'avertira si tu l'oublies. C'est une empreinte numérique de l'objet, utilisée
+par `Dictionary` et `HashSet` pour ranger les choses très vite. La règle est
+absolue :
+
+> **Deux objets égaux doivent avoir le même hash.**
+
+Si tu la violes, ton objet disparaît mystérieusement des dictionnaires. Bug
+cauchemardesque. `HashCode.Combine(...)` fait le travail correctement, utilise-le
+toujours.
+
+> ⚠️ Remarque : `Equals` fonctionne maintenant, mais `==` reste l'égalité de
+> référence ! Pour changer aussi `==`, il faut **surcharger l'opérateur**, ce qui
+> est encore un cran plus loin. D'où l'intérêt de ce qui suit…
+
+---
+
+### 🆕 La solution moderne : `record`
+
+Tout ce code, C# peut l'écrire pour toi. En **une ligne** :
+
+```csharp
+public record Coordonnee(int Ligne, int Colonne);
+```
+
+C'est tout. Et tu obtiens gratuitement :
+
+```csharp
+var a = new Coordonnee(3, 5);
+var b = new Coordonnee(3, 5);
+
+a == b            // true ✅  (== compare le CONTENU)
+a.Equals(b)       // true ✅
+a.GetHashCode()   // identique à celui de b ✅
+Console.WriteLine(a);   // Coordonnee { Ligne = 3, Colonne = 5 } ✅
+```
+
+> ⚠️ **Petite surprise** : ce `ToString()` liste **toutes les propriétés
+> publiques** du record — y compris celles que tu ajoutes toi-même, même
+> calculées. Si tu ajoutes `public bool EstOrigine => ...`, l'affichage devient
+> `Coordonnee { Ligne = 3, Colonne = 5, EstOrigine = False }`. Logique une fois
+> qu'on le sait, déroutant la première fois.
+
+Un `record` est une classe **conçue pour transporter des données**. C# lui
+fabrique automatiquement le constructeur, les propriétés, `Equals`,
+`GetHashCode`, `ToString`, et l'opérateur `==`.
+
+### Un `record` est immuable
+
+```csharp
+var position = new Coordonnee(3, 5);
+position.Ligne = 7;        // ❌ erreur de compilation !
+```
+
+Ses propriétés sont en lecture seule. Pour « changer » une valeur, on fabrique
+une **copie modifiée** avec le mot-clé `with` :
+
+```csharp
+var depart  = new Coordonnee(3, 5);
+var arrivee = depart with { Ligne = 7 };   // Coordonnee { Ligne = 7, Colonne = 5 }
+
+// depart n'a pas bougé : c'est un NOUVEL objet
+```
+
+Ça paraît contraignant, et c'est en réalité un immense avantage : **un objet qui
+ne change jamais ne peut pas être modifié dans ton dos**. Plus de « mais qui a
+changé mes PV ?! ». Tu retrouveras cette idée au module 8 : ce qui ne change pas
+est automatiquement sûr entre plusieurs threads.
+
+### `class` ou `record` ?
+
+| | `class` | `record` |
+|---|---|---|
+| Égalité par défaut | la **référence** | le **contenu** |
+| Modifiable | oui | non (immuable) |
+| `ToString()` lisible | à écrire | offert |
+| Pour représenter | quelque chose **qui vit et change** | une **valeur** |
+
+**La question à se poser** : « deux exemplaires au même contenu sont-ils la même
+chose ? »
+
+- Deux `Coordonnee(3, 5)` → **oui**, c'est la même case. → `record`
+- Deux `Personnage("Kaelis", 100, 12)` → **non**, ce sont deux héros distincts
+  qui vont évoluer différemment. → `class`
+
+> 🧠 **La règle du pouce** : `record` pour les **valeurs** (une position, une
+> date, une couleur, un montant), `class` pour les **entités** (un joueur, un
+> monstre, une partie). Une valeur se remplace ; une entité a une vie.
+
+---
+
 ## 🎯 Récapitulatif
 
 | Concept | Syntaxe |
@@ -424,6 +590,9 @@ première rencontre avec le **polymorphisme** — le grand sujet du module 5.
 | Appeler une méthode | `p.SubirDegats(30);` |
 | Donnée partagée par la classe | `public static int Compteur;` |
 | Affichage personnalisé | `public override string ToString()` |
+| Comparer le CONTENU de deux objets | `override Equals` + `override GetHashCode` |
+| Une valeur comparée par contenu, sans effort | `public record Coordonnee(int X, int Y);` |
+| Copier un record en changeant un champ | `depart with { Ligne = 7 }` |
 
 ---
 
@@ -434,6 +603,7 @@ Ce module a **trois fichiers** à remplir, dans cet ordre :
 1. `Exercices/Arme.cs` ⭐ — la plus simple, pour se faire la main
 2. `Exercices/Monstre.cs` ⭐⭐
 3. `Exercices/Personnage.cs` ⭐⭐⭐ — la plus complète
+4. `Exercices/Position.cs` ⭐⭐ — l'égalité : `Equals` à la main, puis `record`
 
 Un quatrième fichier, `Exercices/Potion.cs`, est **entièrement écrit** : c'est
 ton **modèle**. Lis-le en premier, il contient tout ce dont tu as besoin.

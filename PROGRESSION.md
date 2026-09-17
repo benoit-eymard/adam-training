@@ -83,7 +83,8 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [ ] Exo 1 ⭐ La classe `Arme`
 - [ ] Exo 2 ⭐⭐ La classe `Monstre`
 - [ ] Exo 3 ⭐⭐⭐ La classe `Personnage`
-- [ ] **Les 38 tests passent**
+- [ ] Exo 4 ⭐⭐ L'égalité : `Equals`, `GetHashCode`, puis `record`
+- [ ] **Les 52 tests passent**
 - [ ] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI — L'Arène
 - [ ] 🔍 Pull Request ouverte, relue et fermée

@@ -395,3 +395,130 @@ public class Exercice3_Personnage_ToString
         Assert.Equal("Thorin (100/150 PV) — mains nues", heros.ToString());
     }
 }
+
+public class Exercice4_Egalite_ALaMain
+{
+    [Fact]
+    public void Deux_positions_identiques_sont_egales()
+    {
+        Assert.True(new Position(3, 5).Equals(new Position(3, 5)));
+    }
+
+    [Fact]
+    public void Deux_positions_differentes_ne_le_sont_pas()
+    {
+        Assert.False(new Position(3, 5).Equals(new Position(9, 9)));
+        Assert.False(new Position(3, 5).Equals(new Position(3, 9)));
+        Assert.False(new Position(3, 5).Equals(new Position(9, 5)));
+    }
+
+    [Fact]
+    public void Comparer_a_null_ne_plante_pas()
+    {
+        Assert.False(new Position(3, 5).Equals(null));
+    }
+
+    [Fact]
+    public void Comparer_a_autre_chose_ne_plante_pas()
+    {
+        Assert.False(new Position(3, 5).Equals("bonjour"));
+        Assert.False(new Position(3, 5).Equals(42));
+    }
+
+    [Fact]
+    public void Deux_objets_EGAUX_ont_le_MEME_hash()
+    {
+        // La regle absolue. La violer casse Dictionary et HashSet.
+        Assert.Equal(new Position(3, 5).GetHashCode(), new Position(3, 5).GetHashCode());
+    }
+
+    [Fact]
+    public void Un_Dictionary_retrouve_la_position()
+    {
+        // C'est CA que Equals + GetHashCode rendent possible.
+        var tresors = new Dictionary<Position, string>
+        {
+            [new Position(3, 5)] = "coffre",
+        };
+
+        Assert.True(tresors.ContainsKey(new Position(3, 5)));
+        Assert.Equal("coffre", tresors[new Position(3, 5)]);
+    }
+
+    [Fact]
+    public void Mais_l_operateur_egal_egal_reste_une_comparaison_de_REFERENCE()
+    {
+        // Redefinir Equals ne change PAS == sur une classe.
+        // C'est justement ce que le record corrige.
+        Position a = new Position(3, 5);
+        Position b = new Position(3, 5);
+
+        Assert.False(a == b);        // deux boites differentes
+        Assert.True(a.Equals(b));    // mais meme contenu
+    }
+}
+
+public class Exercice4_Record
+{
+    [Fact]
+    public void Le_record_compare_le_CONTENU_avec_egal_egal()
+    {
+        Assert.True(new Coordonnee(3, 5) == new Coordonnee(3, 5));
+        Assert.False(new Coordonnee(3, 5) == new Coordonnee(9, 9));
+    }
+
+    [Fact]
+    public void Le_record_fournit_Equals_et_GetHashCode()
+    {
+        Assert.True(new Coordonnee(3, 5).Equals(new Coordonnee(3, 5)));
+        Assert.Equal(new Coordonnee(3, 5).GetHashCode(), new Coordonnee(3, 5).GetHashCode());
+    }
+
+    [Fact]
+    public void Le_record_fournit_un_ToString_lisible()
+    {
+        // Surprise : le ToString genere liste TOUTES les proprietes
+        // publiques du record, y compris les proprietes CALCULEES.
+        // EstOrigine apparait donc, meme si elle n'est pas dans le
+        // constructeur. (Voir l'encadre du COURS, section 10.)
+        Assert.Equal(
+            "Coordonnee { Ligne = 3, Colonne = 5, EstOrigine = False }",
+            new Coordonnee(3, 5).ToString());
+    }
+
+    [Fact]
+    public void EstOrigine()
+    {
+        Assert.True(new Coordonnee(0, 0).EstOrigine);
+        Assert.False(new Coordonnee(3, 5).EstOrigine);
+        Assert.False(new Coordonnee(0, 5).EstOrigine);
+        Assert.False(new Coordonnee(3, 0).EstOrigine);
+    }
+
+    [Fact]
+    public void Deplacer_donne_la_bonne_coordonnee()
+    {
+        Assert.Equal(new Coordonnee(4, 3), new Coordonnee(3, 5).Deplacer(1, -2));
+        Assert.Equal(new Coordonnee(3, 5), new Coordonnee(3, 5).Deplacer(0, 0));
+    }
+
+    [Fact]
+    public void Deplacer_ne_MODIFIE_pas_l_original()
+    {
+        var depart = new Coordonnee(3, 5);
+        depart.Deplacer(10, 10);
+
+        Assert.Equal(new Coordonnee(3, 5), depart);   // intact : un record est immuable
+    }
+
+    [Fact]
+    public void Plusieurs_deplacements_s_enchainent()
+    {
+        var arrivee = new Coordonnee(0, 0)
+            .Deplacer(1, 0)
+            .Deplacer(0, 1)
+            .Deplacer(2, 2);
+
+        Assert.Equal(new Coordonnee(3, 3), arrivee);
+    }
+}

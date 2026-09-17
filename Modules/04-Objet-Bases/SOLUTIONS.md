@@ -260,6 +260,139 @@ Dès que ça devient long, repasse à un vrai `if`.
 
 ---
 
+---
+
+## Exercice 4 — L'égalité
+
+### 4.1 et 4.2 — `Equals` et `GetHashCode` à la main
+
+```csharp
+public override bool Equals(object obj)
+{
+    if (obj is not Position autre)
+    {
+        return false;
+    }
+    return Ligne == autre.Ligne && Colonne == autre.Colonne;
+}
+
+public override int GetHashCode()
+{
+    return HashCode.Combine(Ligne, Colonne);
+}
+```
+
+**`obj is not Position autre`** fait trois choses en une ligne :
+
+1. est-ce que `obj` est bien une `Position` ?
+2. est-ce qu'il n'est pas `null` ? (`null` n'est jamais d'un type)
+3. si oui, range-le dans `autre`, déjà converti
+
+Sans ça, il faudrait tester `null`, tester le type, puis convertir — trois
+lignes et une occasion de se tromper.
+
+### Pourquoi `GetHashCode` est obligatoire
+
+Un `Dictionary` ne compare pas ses clés une par une : ce serait trop lent. Il
+calcule d'abord le **hash** de la clé pour aller directement dans le bon tiroir,
+et ne compare qu'à l'intérieur de ce tiroir.
+
+Donc si deux objets égaux ont des hash différents, ils atterrissent dans **deux
+tiroirs différents** — et le dictionnaire ne les retrouve jamais. Ton objet est
+là, mais `ContainsKey` répond `false`. 😱
+
+> 🧠 **La règle** : deux objets égaux **doivent** avoir le même hash. L'inverse
+> n'est pas requis (deux objets différents peuvent partager un hash, c'est une
+> « collision », et c'est normal).
+>
+> `HashCode.Combine(...)` fait ça correctement. Ne t'amuse jamais à écrire
+> `return Ligne + Colonne;` : `(1,2)` et `(2,1)` auraient le même hash pour rien,
+> et les performances s'écrouleraient.
+
+Le test `Un_Dictionary_retrouve_la_position` est là pour te montrer ce que ces
+deux méthodes rendent possible.
+
+### ⚠️ Et `==` alors ?
+
+```csharp
+Assert.False(a == b);        // toujours une comparaison de RÉFÉRENCE
+Assert.True(a.Equals(b));    // mais Equals fonctionne
+```
+
+Redéfinir `Equals` sur une **classe** ne change **pas** `==`. Pour ça, il
+faudrait surcharger l'opérateur :
+
+```csharp
+public static bool operator ==(Position a, Position b) { ... }
+public static bool operator !=(Position a, Position b) { ... }
+```
+
+…et c'est justement tout ce que le `record` t'offre gratuitement.
+
+---
+
+### 4.3 et 4.4 — Le record
+
+```csharp
+public record Coordonnee(int Ligne, int Colonne)
+{
+    public bool EstOrigine => Ligne == 0 && Colonne == 0;
+
+    public Coordonnee Deplacer(int deltaLigne, int deltaColonne)
+    {
+        return this with { Ligne = Ligne + deltaLigne, Colonne = Colonne + deltaColonne };
+    }
+}
+```
+
+### `with` : copier en changeant
+
+```csharp
+return this with { Ligne = Ligne + deltaLigne, Colonne = Colonne + deltaColonne };
+```
+
+Ça se lit : « **moi, mais avec ces champs-là changés** ». C# fabrique une copie
+complète de l'objet, remplace les champs listés, et te la rend. **L'original
+n'est jamais touché** — c'est ce que vérifie le test
+`Deplacer_ne_MODIFIE_pas_l_original`.
+
+Écrire `Ligne = Ligne + deltaLigne;` ne compilerait même pas : les propriétés
+d'un record sont en lecture seule.
+
+### Pourquoi c'est une bonne chose
+
+L'immuabilité paraît être une contrainte. C'est en fait une **garantie** :
+
+- **Personne ne peut modifier ton objet dans ton dos.** Tu peux le passer à
+  n'importe quelle méthode sans crainte.
+- **Pas besoin de copier par précaution.** Puisqu'il ne change pas, le partager
+  est gratuit.
+- **C'est automatiquement sûr entre plusieurs threads** — souviens-toi du
+  module 8 : un objet qui ne change jamais n'a aucune race condition possible.
+  Pas de verrou nécessaire.
+
+C'est pour ça que les enchaînements fonctionnent naturellement :
+
+```csharp
+new Coordonnee(0, 0).Deplacer(1, 0).Deplacer(0, 1).Deplacer(2, 2)
+```
+
+Chaque appel rend un nouvel objet. Exactement comme `"abc".ToUpper().Trim()` sur
+les chaînes — qui sont immuables elles aussi (module 3).
+
+### `class` ou `record` : la question à se poser
+
+> « Deux exemplaires au même contenu sont-ils **la même chose** ? »
+
+- Deux `Coordonnee(3, 5)` → **oui**, c'est la même case du plateau → `record`
+- Deux `Personnage("Kaelis", 100, 12)` → **non**, ce sont deux héros distincts
+  qui vont vivre des aventures différentes → `class`
+
+**Valeur → `record`. Entité → `class`.** Une valeur se remplace ; une entité a
+une histoire.
+
+---
+
 ## ✅ Bilan du module
 
 Tu viens de franchir la plus grosse marche du parcours. Tu sais maintenant :
