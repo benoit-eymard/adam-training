@@ -74,6 +74,10 @@ git config --global user.email "ton.email@exemple.com"
 
 ### Récupérer le cours
 
+> 📨 **Avant tout** : tu as reçu une invitation de Benoît à rejoindre le dépôt
+> (par mail, et sur https://github.com/notifications). **Accepte-la**, sinon
+> tes `push` seront refusés avec une erreur de permission.
+
 ```bash
 git clone https://github.com/benoit-eymard/adam-training.git
 ```
@@ -270,6 +274,34 @@ Ligne 1 : tu crées une branche qui pointe sur ton travail.
 Ligne 2 : tu remets `main` comme sur GitHub (⚠️ **seulement si tu n'as pas
 encore poussé** ton erreur).
 Ligne 3 : tu vas sur ta branche, ton travail est intact.
+
+### « Mon `push` sur `main` est refusé ! »
+
+```
+! [remote rejected] main -> main (protected branch hook declined)
+```
+
+**C'est voulu, et c'est une bonne nouvelle** : le garde-fou a fonctionné, tu as
+essayé de pousser sur le cours vierge. Ton travail n'est pas perdu, il est juste
+au mauvais endroit. Mets-le sur une branche :
+
+```bash
+git branch module-1
+```
+
+```bash
+git reset --hard origin/main
+```
+
+```bash
+git switch module-1
+```
+
+Puis pousse normalement :
+
+```bash
+git push -u origin module-1
+```
 
 ### « J'ai modifié un fichier et je veux annuler »
 
