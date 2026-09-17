@@ -2,6 +2,10 @@
 
 Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 
+> 🌿 **Avant de commencer un module**, crée sa branche depuis la précédente :
+> `git switch -c module-N` puis `git push -u origin module-N`.
+> Jamais de travail sur `main` ! Voir [GIT.md](GIT.md).
+
 ---
 
 ## Module 1 — Premiers pas 🥚

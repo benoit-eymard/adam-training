@@ -30,8 +30,50 @@ le précédent.
 ## 🚀 Démarrer
 
 1. Installe les outils : suis le guide [INSTALLATION.md](INSTALLATION.md) (10 minutes).
-2. Ouvre le module 1 : [Modules/01-Premiers-Pas/COURS.md](Modules/01-Premiers-Pas/COURS.md)
-3. Note ta progression dans [PROGRESSION.md](PROGRESSION.md)
+2. Apprends à sauvegarder ton travail : [GIT.md](GIT.md) (15 minutes) —
+   **à lire avant de commencer à coder**.
+3. Crée ta branche du module 1 :
+   ```bash
+   git switch -c module-1
+   ```
+4. Ouvre le module 1 : [Modules/01-Premiers-Pas/COURS.md](Modules/01-Premiers-Pas/COURS.md)
+5. Note ta progression dans [PROGRESSION.md](PROGRESSION.md)
+
+---
+
+## 🌿 Où écrire ton code ?
+
+> ### ⚠️ Jamais sur la branche `main`.
+
+`main`, c'est le **cours d'origine**, avec les exercices encore vides. C'est ta
+référence : si tu écris tes réponses dedans, tu la détruis.
+
+**Une branche par module**, chacune créée depuis la précédente :
+
+```
+main         ●──────────────────────────────  le cours vierge, intact
+              \
+module-1       ●───●───●                      ton travail du module 1
+                        \
+module-2                 ●───●───●            module 1 + 2
+                                  \
+module-3                           ●───●      module 1 + 2 + 3
+```
+
+Au début de chaque module :
+
+```bash
+git switch -c module-2
+```
+
+Et à chaque exercice terminé :
+
+```bash
+git add . && git commit -m "Module 2 : exercice 3 terminé" && git push
+```
+
+Tout est expliqué en détail dans [GIT.md](GIT.md) — y compris **comment te
+rattraper** quand tu fais une bêtise (ça arrivera, c'est normal).
 
 ---
 
@@ -40,15 +82,18 @@ le précédent.
 Chaque module suit toujours le même rythme :
 
 ```
+🌿 git switch -c   →  Tu crées la branche du module.
 📖 COURS.md        →  Tu lis la théorie (15-20 min). Prends ton temps.
 ▶️  dotnet run      →  Tu lances la démo pour VOIR le concept en action.
 ✍️  Exercices.cs    →  Tu remplis les // TODO: c'est là que tu codes.
 ✅ dotnet test     →  Les tests te disent tout de suite si c'est bon.
+🌿 git commit      →  Tests verts = tu sauvegardes. À chaque exercice !
 💡 SOLUTIONS.md    →  Tu compares avec la correction commentée.
 🏆 DEFI.md         →  Un mini-projet libre pour valider le module.
+🌿 git push        →  Ton travail est en sécurité sur GitHub.
 ```
 
-### Les deux commandes à retenir
+### Les trois commandes à retenir
 
 Place-toi dans le dossier du module, puis :
 
@@ -60,7 +105,13 @@ dotnet run --project Exercices
 dotnet test Tests
 ```
 
-Le premier lance le programme. Le second vérifie tes exercices.
+La première lance le programme. La seconde vérifie tes exercices.
+
+Et dès qu'un exercice passe au vert, depuis la racine du projet :
+
+```bash
+git add . && git commit -m "Module 1 : exercice 3 terminé" && git push
+```
 
 ---
 
@@ -87,3 +138,17 @@ Dans l'ordre :
 - **Casse des choses.** Modifie les exemples, change les valeurs, vois ce qui explose.
   C'est comme ça qu'on apprend le plus vite.
 - **Le code qui marche mais que tu ne comprends pas** n'est pas du code qui marche.
+- **Commite dès que les tests sont verts**, et pousse à la fin de chaque séance.
+  Un disque dur, ça meurt. Ton travail sur GitHub, non.
+- **Ne travaille jamais sur `main`.** Une branche par module.
+
+---
+
+## 🗂️ Les fichiers de ce dépôt
+
+| Fichier | À quoi ça sert |
+|---------|----------------|
+| [INSTALLATION.md](INSTALLATION.md) | installer VS Code et le SDK .NET |
+| [GIT.md](GIT.md) | sauvegarder ton travail, les branches, se rattraper |
+| [PROGRESSION.md](PROGRESSION.md) | ta checklist et ton carnet de bord |
+| [GLOSSAIRE.md](GLOSSAIRE.md) | tout le vocabulaire, des variables au deadlock |
