@@ -408,3 +408,157 @@ public class Exercice9_Sauvegarde : IDisposable
         Assert.False(Sauvegarde.Supprimer(_fichier));
     }
 }
+
+public class Exercice10_Historique
+{
+    [Fact]
+    public void Un_historique_neuf_est_vide()
+    {
+        var h = new Historique();
+        Assert.Equal(0, h.Nombre);
+        Assert.True(h.EstVide);
+    }
+
+    [Fact]
+    public void Faire_memorise()
+    {
+        var h = new Historique();
+        h.Faire("ecrire");
+        h.Faire("colorer");
+
+        Assert.Equal(2, h.Nombre);
+        Assert.False(h.EstVide);
+    }
+
+    [Fact]
+    public void Faire_ignore_le_vide()
+    {
+        var h = new Historique();
+        h.Faire(null);
+        h.Faire("");
+        Assert.Equal(0, h.Nombre);
+    }
+
+    [Fact]
+    public void Annuler_retire_la_DERNIERE_action()
+    {
+        var h = new Historique();
+        h.Faire("ecrire");
+        h.Faire("colorer");
+
+        Assert.Equal("colorer", h.Annuler());    // la derniere d'abord !
+        Assert.Equal("ecrire", h.Annuler());
+        Assert.Equal(0, h.Nombre);
+    }
+
+    [Fact]
+    public void Annuler_sur_un_historique_vide_rend_null()
+    {
+        Assert.Null(new Historique().Annuler());
+    }
+
+    [Fact]
+    public void Derniere_ne_retire_PAS()
+    {
+        var h = new Historique();
+        h.Faire("ecrire");
+        h.Faire("colorer");
+
+        Assert.Equal("colorer", h.Derniere());
+        Assert.Equal("colorer", h.Derniere());   // toujours la !
+        Assert.Equal(2, h.Nombre);
+    }
+
+    [Fact]
+    public void Derniere_sur_un_historique_vide_rend_null()
+    {
+        Assert.Null(new Historique().Derniere());
+    }
+
+    [Fact]
+    public void ToutAnnuler_vide_la_pile_dans_le_bon_ordre()
+    {
+        var h = new Historique();
+        h.Faire("a");
+        h.Faire("b");
+        h.Faire("c");
+
+        Assert.Equal(new List<string> { "c", "b", "a" }, h.ToutAnnuler());
+        Assert.Equal(0, h.Nombre);
+        Assert.True(h.EstVide);
+    }
+
+    [Fact]
+    public void ToutAnnuler_sur_un_historique_vide()
+    {
+        Assert.Empty(new Historique().ToutAnnuler());
+    }
+}
+
+public class Exercice11_Servir
+{
+    [Fact]
+    public void Sert_dans_l_ordre_d_arrivee()
+    {
+        var restants = Exo.Servir(new[] { "Thorin", "Elyra", "Sylas" }, 1);
+        Assert.Equal(new List<string> { "Elyra", "Sylas" }, restants);
+    }
+
+    [Fact]
+    public void Servir_personne()
+    {
+        var restants = Exo.Servir(new[] { "Thorin", "Elyra" }, 0);
+        Assert.Equal(new List<string> { "Thorin", "Elyra" }, restants);
+    }
+
+    [Fact]
+    public void Servir_tout_le_monde()
+    {
+        Assert.Empty(Exo.Servir(new[] { "Thorin", "Elyra" }, 2));
+    }
+
+    [Fact]
+    public void Servir_plus_que_le_nombre_de_personnes_ne_plante_pas()
+    {
+        Assert.Empty(Exo.Servir(new[] { "Thorin", "Elyra" }, 99));
+    }
+
+    [Fact]
+    public void File_vide()
+    {
+        Assert.Empty(Exo.Servir(new string[0], 3));
+    }
+}
+
+public class Exercice12_AuMoinsUnDoublon
+{
+    [Theory]
+    [InlineData(new[] { "a", "b", "a" }, true)]
+    [InlineData(new[] { "a", "a" }, true)]
+    [InlineData(new[] { "a", "b", "c" }, false)]
+    [InlineData(new[] { "a" }, false)]
+    [InlineData(new string[0], false)]
+    public void Detecte_les_doublons(string[] elements, bool attendu)
+    {
+        Assert.Equal(attendu, Exo.AuMoinsUnDoublon(elements));
+    }
+
+    [Fact]
+    public void La_casse_compte()
+    {
+        Assert.False(Exo.AuMoinsUnDoublon(new[] { "Epee", "epee" }));
+    }
+}
+
+public class Exercice13_SallesDifferentes
+{
+    [Theory]
+    [InlineData(new[] { "A", "B", "A", "C", "B" }, 3)]
+    [InlineData(new[] { "A", "A", "A" }, 1)]
+    [InlineData(new[] { "A", "B", "C" }, 3)]
+    [InlineData(new string[0], 0)]
+    public void Compte_les_salles_distinctes(string[] salles, int attendu)
+    {
+        Assert.Equal(attendu, Exo.SallesDifferentes(salles));
+    }
+}

@@ -435,6 +435,187 @@ protégées. **Chaque classe a un seul métier.**
 
 ---
 
+---
+
+# 🗃️ Partie B — Queue, Stack et HashSet
+
+## Exercice 10 — L'historique (`Stack`)
+
+```csharp
+public int Nombre => _actions.Count;
+public bool EstVide => _actions.Count == 0;
+
+public void Faire(string action)
+{
+    if (string.IsNullOrEmpty(action)) return;
+    _actions.Push(action);
+}
+
+public string Annuler()
+{
+    if (EstVide) return null;
+    return _actions.Pop();
+}
+
+public string Derniere()
+{
+    if (EstVide) return null;
+    return _actions.Peek();
+}
+
+public List<string> ToutAnnuler()
+{
+    List<string> annulees = new List<string>();
+    while (!EstVide)
+    {
+        annulees.Add(Annuler());
+    }
+    return annulees;
+}
+```
+
+**`Pop` ou `Peek` ?** `Pop` **retire** et rend, `Peek` **regarde** sans retirer.
+La confusion entre les deux est l'erreur classique — le test
+`Derniere_ne_retire_PAS` est là pour l'attraper.
+
+**`if (EstVide) return null;`** : `Pop()` sur une pile vide lève une
+`InvalidOperationException`. C'est **prévisible**, donc ça se **teste** — pas de
+`try/catch` ici. (La règle du module : `if` pour ce qu'on peut prévoir.)
+
+**`ToutAnnuler` réutilise `Annuler`.** C'est la décomposition du module 3 : une
+méthode s'appuie sur une autre, la règle « ne rien retirer d'une pile vide » est
+écrite **une seule fois**.
+
+> 🧠 **Pourquoi une pile pour un Ctrl+Z ?** Parce qu'on annule **toujours dans
+> l'ordre inverse**. Tu écris, tu colores, tu effaces → le premier Ctrl+Z doit
+> défaire *effacer*, pas *écrire*. C'est exactement le comportement LIFO. La
+> structure de données **est** la règle métier : tu n'as aucune logique d'ordre
+> à écrire, elle est offerte.
+>
+> C'est ça, bien choisir sa collection.
+
+---
+
+## Exercice 11 — La file d'attente (`Queue`)
+
+```csharp
+public static List<string> Servir(string[] arrivants, int nombre)
+{
+    Queue<string> file = new Queue<string>(arrivants);
+
+    for (int i = 0; i < nombre && file.Count > 0; i++)
+    {
+        file.Dequeue();
+    }
+
+    return new List<string>(file);
+}
+```
+
+**`new Queue<string>(arrivants)`** : la plupart des collections savent se
+construire à partir d'une autre. Pas besoin d'une boucle d'`Enqueue`.
+
+**La double condition `i < nombre && file.Count > 0`** est le cœur de
+l'exercice. Sans `file.Count > 0`, servir 99 personnes dans une file de 2 fait
+planter le programme sur un `Dequeue` à vide.
+
+> 💡 Et grâce à l'**évaluation court-circuit** (module 5), `file.Count > 0` n'est
+> testé que si `i < nombre` est déjà vrai. Les deux gardes travaillent ensemble.
+
+**`new List<string>(file)`** convertit la file en liste **en conservant l'ordre
+de sortie** — donc l'ordre d'arrivée. Exactement ce qu'on veut.
+
+---
+
+## Exercice 12 — Détecter un doublon (`HashSet`)
+
+```csharp
+public static bool AuMoinsUnDoublon(string[] elements)
+{
+    HashSet<string> vus = new HashSet<string>();
+
+    foreach (string e in elements)
+    {
+        if (!vus.Add(e))
+        {
+            return true;      // Add a rendu false -> il etait DÉJÀ là
+        }
+    }
+    return false;
+}
+```
+
+**L'astuce est dans le retour de `Add`** : il rend `true` si l'élément était
+nouveau, `false` s'il était déjà présent. Donc `if (!vus.Add(e))` se lit
+littéralement « si je n'ai pas réussi à l'ajouter, c'est qu'il y était déjà ».
+
+Une seule opération fait **le test et l'ajout**. Pas besoin de
+`if (vus.Contains(e)) ... else vus.Add(e)`.
+
+**Et le `return true` immédiat** : dès qu'on a trouvé un doublon, inutile de
+parcourir le reste. Sortie anticipée, comme d'habitude.
+
+---
+
+## Exercice 13 — Les salles visitées
+
+```csharp
+public static int SallesDifferentes(string[] salles)
+{
+    return new HashSet<string>(salles).Count;
+}
+```
+
+**Une ligne.** On jette tout dans un `HashSet`, les doublons disparaissent tout
+seuls, on compte.
+
+Compare avec ce qu'il aurait fallu écrire avec une `List` : une boucle, un
+`Contains`, un `Add` conditionnel — et un code beaucoup plus lent.
+
+> 🧠 **La leçon des trois exercices** : quand on choisit la bonne structure de
+> données, le code devient court **et** rapide. Quand on choisit mal, on écrit
+> des boucles imbriquées pour compenser.
+>
+> Retiens la question à se poser :
+>
+> | Mon besoin | Ma collection |
+> |---|---|
+> | l'ordre et l'index | `List` |
+> | clé → valeur | `Dictionary` |
+> | premier arrivé, premier servi | `Queue` |
+> | annuler dans l'ordre inverse | `Stack` |
+> | pas de doublons, test rapide | `HashSet` |
+
+### ⚡ Retour sur l'exercice 2
+
+Souviens-toi de `SansDoublons` :
+
+```csharp
+if (!resultat.Contains(e)) resultat.Add(e);    // List : lent sur de gros volumes
+```
+
+Sur 100 000 éléments, ce `Contains` compare un par un : des milliards
+d'opérations. Avec un `HashSet` en support, c'est instantané :
+
+```csharp
+public static List<string> SansDoublons(List<string> elements)
+{
+    HashSet<string> vus = new HashSet<string>();
+    List<string> resultat = new List<string>();
+
+    foreach (string e in elements)
+    {
+        if (vus.Add(e)) resultat.Add(e);    // l'ordre est conservé !
+    }
+    return resultat;
+}
+```
+
+Le `HashSet` sert à **tester vite**, la `List` à **garder l'ordre**. Utiliser
+deux collections ensemble pour cumuler leurs avantages est un réflexe de pro.
+
+---
+
 ## ✅ Bilan du module
 
 Tu sais maintenant :

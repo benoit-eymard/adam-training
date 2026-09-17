@@ -172,4 +172,80 @@ public static class Exo
         // TODO:
         return 0;
     }
+
+    // ═══════════════════════════════════════════════════════════
+    //  PARTIE B — Queue et HashSet
+    // ═══════════════════════════════════════════════════════════
+
+    // ───────────────────────────────────────────────────────────────
+    //  EXERCICE 11 ⭐⭐ — La file d'attente
+    //
+    //  Des aventuriers arrivent à la taverne. On en sert "nombre",
+    //  dans l'ordre d'arrivée. Retourne la liste de ceux qui
+    //  attendent ENCORE, toujours dans l'ordre.
+    //
+    //  Servir(["Thorin", "Elyra", "Sylas"], 1) → ["Elyra", "Sylas"]
+    //  Servir(["Thorin", "Elyra", "Sylas"], 0) → ["Thorin", "Elyra", "Sylas"]
+    //  Servir(["Thorin", "Elyra"], 5)          → []   (tout le monde servi)
+    //  Servir([], 3)                           → []
+    //
+    //  ⚠️ On ne sert pas plus de monde qu'il n'y en a : Dequeue()
+    //     sur une file vide fait planter le programme !
+    //
+    //  💡 Une Queue se remplit directement depuis une collection :
+    //       Queue<string> file = new Queue<string>(arrivants);
+    //  💡 Enqueue = ajouter à la fin, Dequeue = retirer le premier.
+    //  💡 Pour finir : new List<string>(file) garde l'ordre de la file.
+    // ───────────────────────────────────────────────────────────────
+    public static List<string> Servir(string[] arrivants, int nombre)
+    {
+        // TODO:
+        return new List<string>();
+    }
+
+
+    // ───────────────────────────────────────────────────────────────
+    //  EXERCICE 12 ⭐⭐ — Détecter un doublon
+    //
+    //  Y a-t-il au moins un élément présent deux fois ?
+    //
+    //  AuMoinsUnDoublon(["a", "b", "a"]) → true
+    //  AuMoinsUnDoublon(["a", "b", "c"]) → false
+    //  AuMoinsUnDoublon([])              → false
+    //  AuMoinsUnDoublon(["a"])           → false
+    //
+    //  💡 L'astuce du HashSet : Add(x) retourne FALSE quand
+    //     l'élément était DÉJÀ là. Donc dès qu'un Add rend false,
+    //     tu as trouvé ton doublon et tu peux sortir tout de suite.
+    //
+    //  ⚠️ N'utilise pas une List avec Contains : sur un million
+    //     d'éléments ce serait des heures. Avec un HashSet, c'est
+    //     instantané.
+    // ───────────────────────────────────────────────────────────────
+    public static bool AuMoinsUnDoublon(string[] elements)
+    {
+        // TODO:
+        return false;
+    }
+
+
+    // ───────────────────────────────────────────────────────────────
+    //  EXERCICE 13 ⭐⭐⭐ — Les salles visitées
+    //
+    //  Le héros parcourt des salles, parfois plusieurs fois.
+    //  Retourne le nombre de salles DIFFÉRENTES visitées.
+    //
+    //  SallesDifferentes(["A", "B", "A", "C", "B"]) → 3
+    //  SallesDifferentes(["A", "A", "A"])           → 1
+    //  SallesDifferentes([])                        → 0
+    //
+    //  💡 Deux lignes suffisent avec un HashSet.
+    //  💡 Un HashSet se construit lui aussi directement depuis une
+    //     collection : new HashSet<string>(salles)
+    // ───────────────────────────────────────────────────────────────
+    public static int SallesDifferentes(string[] salles)
+    {
+        // TODO:
+        return 0;
+    }
 }

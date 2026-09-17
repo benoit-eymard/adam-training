@@ -124,7 +124,11 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [ ] Exo 7 ⭐⭐⭐ `MoyenneDesValides`
 - [ ] Exo 8 ⭐⭐⭐ La classe `Inventaire`
 - [ ] Exo 9 ⭐⭐⭐ `Sauvegarde` (fichiers + JSON)
-- [ ] **Les 64 tests passent**
+- [ ] Exo 10 ⭐⭐ `Historique` : le Ctrl+Z avec une `Stack`
+- [ ] Exo 11 ⭐⭐ `Servir` : la file d'attente avec une `Queue`
+- [ ] Exo 12 ⭐⭐ `AuMoinsUnDoublon` (`HashSet`)
+- [ ] Exo 13 ⭐⭐⭐ `SallesDifferentes` (`HashSet`)
+- [ ] **Les 88 tests passent**
 - [ ] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI — Le Gestionnaire de Guilde
 - [ ] 🔍 Pull Request ouverte, relue et fermée

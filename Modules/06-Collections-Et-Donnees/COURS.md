@@ -193,7 +193,145 @@ foreach (int score in scores.Values) { }     // juste les valeurs
 
 ---
 
-## 3. Les exceptions : quand ça tourne mal
+## 3. Trois autres collections à connaître
+
+`List` et `Dictionary` couvrent 80 % des besoins. Voilà les trois autres que tu
+croiseras tout le temps — et qui ont chacune **une idée** derrière elles.
+
+---
+
+### `Queue<T>` : la file d'attente (premier arrivé, premier servi)
+
+Comme la file à la boulangerie. On ajoute **à la fin**, on retire **au début**.
+On dit **FIFO** : *First In, First Out*.
+
+```csharp
+Queue<string> file = new Queue<string>();
+
+file.Enqueue("Thorin");     // il arrive et se met au bout
+file.Enqueue("Elyra");
+file.Enqueue("Sylas");
+
+string suivant = file.Dequeue();   // "Thorin" — il est servi et sort
+Console.WriteLine(file.Count);     // 2
+
+string prochain = file.Peek();     // "Elyra" — on REGARDE sans le faire sortir
+```
+
+| Méthode | Ce qu'elle fait |
+|---------|-----------------|
+| `Enqueue(x)` | ajoute à la fin de la file |
+| `Dequeue()` | retire **et rend** le premier |
+| `Peek()` | rend le premier **sans le retirer** |
+| `Count` | combien il en reste |
+
+> ⚠️ `Dequeue()` sur une file **vide** lève une `InvalidOperationException`.
+> Vérifie `Count > 0` d'abord. (Ou `TryDequeue(out var x)`, le même motif que
+> `TryParse` !)
+
+**À quoi ça sert** : la file d'attente d'un serveur, les tâches à traiter dans
+l'ordre, les messages à envoyer, l'ordre des tours dans ton RPG, l'exploration
+d'un labyrinthe niveau par niveau.
+
+---
+
+### `Stack<T>` : la pile (dernier arrivé, premier sorti)
+
+Comme une pile d'assiettes : on pose dessus, on reprend celle du dessus. On dit
+**LIFO** : *Last In, First Out*.
+
+```csharp
+Stack<string> actions = new Stack<string>();
+
+actions.Push("écrire");     // on empile
+actions.Push("effacer");
+actions.Push("colorer");
+
+string derniere = actions.Pop();   // "colorer" — la DERNIÈRE posée
+Console.WriteLine(actions.Peek()); // "effacer" — la suivante, sans la retirer
+```
+
+| Méthode | Ce qu'elle fait |
+|---------|-----------------|
+| `Push(x)` | pose au-dessus |
+| `Pop()` | retire **et rend** celui du dessus |
+| `Peek()` | rend celui du dessus **sans le retirer** |
+| `Count` | combien il y en a |
+
+**À quoi ça sert** : **le Ctrl+Z** (annuler la dernière action !), l'historique
+du navigateur (bouton Précédent), les parenthèses imbriquées, et…
+
+> 🧠 …**la pile d'appels de la récursivité** (module 3) ! C'est littéralement
+> une `Stack`. Chaque appel se `Push` dessus, chaque `return` fait un `Pop`.
+> Quand elle déborde, tu obtiens un **Stack** Overflow. Tout est lié. 😄
+
+---
+
+### `HashSet<T>` : l'ensemble sans doublons
+
+Un sac où chaque élément ne peut être présent **qu'une seule fois**. Sans ordre
+garanti.
+
+```csharp
+HashSet<string> visites = new HashSet<string>();
+
+visites.Add("Salle 1");     // true  — ajouté
+visites.Add("Salle 2");     // true
+visites.Add("Salle 1");     // false — déjà là, rien ne se passe
+
+Console.WriteLine(visites.Count);              // 2
+Console.WriteLine(visites.Contains("Salle 1")); // true
+```
+
+`Add` rend un `bool` : **`true` si l'élément était nouveau**, `false` s'il était
+déjà là. Très pratique pour détecter un doublon en une seule opération.
+
+### ⚡ Et surtout : `Contains` est INSTANTANÉ
+
+C'est **la** raison d'exister du `HashSet`.
+
+| | `List.Contains` | `HashSet.Contains` |
+|---|---|---|
+| Comment | compare un par un | calcule le hash, va droit au but |
+| 10 éléments | rapide | rapide |
+| 1 000 000 d'éléments | ~1 000 000 comparaisons 🐌 | **1 seule** ⚡ |
+
+Souviens-toi de l'exercice `SansDoublons` : `resultat.Contains(e)` dans une
+boucle, sur une grande liste, devient très lent. Avec un `HashSet`, c'est
+immédiat.
+
+> 💡 C'est le même mécanisme de `GetHashCode` que dans `Dictionary` (module 4,
+> section 10). Un `HashSet<T>`, c'est d'ailleurs un `Dictionary` sans les
+> valeurs — juste les clés.
+
+Bonus, les opérations d'ensembles mathématiques :
+
+```csharp
+a.UnionWith(b);          // a devient a ∪ b
+a.IntersectWith(b);      // a devient a ∩ b  (ce qu'ils ont en commun)
+a.ExceptWith(b);         // a devient a \ b  (a sans les éléments de b)
+```
+
+---
+
+### Laquelle choisir ?
+
+| Ma question | Ma collection |
+|-------------|---------------|
+| J'ai besoin de l'**ordre** et de l'**index** | `List<T>` |
+| À chaque clé correspond une **valeur** | `Dictionary<K,V>` |
+| **Premier arrivé, premier servi** | `Queue<T>` |
+| **Dernier arrivé, premier sorti** | `Stack<T>` |
+| **Pas de doublons**, et je teste souvent l'appartenance | `HashSet<T>` |
+
+> 🧠 **La vraie compétence** n'est pas de connaître les méthodes — elles
+> s'oublient et se retrouvent. C'est de reconnaître, face à un problème, **quelle
+> structure lui correspond**. Un choix juste rend le code court et rapide ; un
+> mauvais choix te fait écrire trois boucles imbriquées.
+
+---
+
+## 4. Les exceptions : quand ça tourne mal
 
 Une **exception**, c'est une erreur qui survient **pendant** l'exécution — pas à
 la compilation. Le programme s'arrête net.
@@ -304,7 +442,7 @@ Il existe partout : `double.TryParse`, `bool.TryParse`,
 
 ---
 
-## 4. Les fichiers
+## 5. Les fichiers
 
 ```csharp
 // Écrire (écrase le fichier s'il existe)
@@ -332,7 +470,7 @@ File.Delete("partie.txt");
 
 ---
 
-## 5. Le JSON : sauvegarder des objets
+## 6. Le JSON : sauvegarder des objets
 
 Écrire `"Kaelis;100;12"` à la main, ça marche... jusqu'au jour où un nom
 contient un `;`. Le **JSON** est un format texte standard, lisible par les
@@ -398,7 +536,7 @@ public class Partie
 
 ---
 
-## 6. Les initialiseurs
+## 7. Les initialiseurs
 
 Deux raccourcis d'écriture très courants :
 
@@ -430,6 +568,9 @@ Partie p = new Partie
 | Ajouter / retirer | `l.Add(x);` `l.Remove(x);` |
 | Sa taille | `l.Count` (pas `Length` !) |
 | Associer clé → valeur | `Dictionary<string, int> d = new();` |
+| Premier arrivé, premier servi | `Queue<T>` : `Enqueue` / `Dequeue` / `Peek` |
+| Dernier arrivé, premier sorti (Ctrl+Z) | `Stack<T>` : `Push` / `Pop` / `Peek` |
+| Pas de doublons, test ultra rapide | `HashSet<T>` : `Add` rend `false` si déjà là |
 | Lire sans risque | `if (d.TryGetValue(k, out int v))` |
 | Convertir sans risque | `if (int.TryParse(s, out int n))` |
 | Gérer une erreur imprévisible | `try { } catch (Exception e) { }` |
@@ -446,6 +587,7 @@ Trois fichiers à remplir :
 
 1. `Exercices/Exo.cs` — listes, dictionnaires, exceptions
 2. `Exercices/Inventaire.cs` — une vraie classe qui utilise une `List<Objet>`
+2bis. `Exercices/Historique.cs` — une pile pour annuler (Ctrl+Z)
 3. `Exercices/Sauvegarde.cs` — fichiers et JSON
 
 ```bash
