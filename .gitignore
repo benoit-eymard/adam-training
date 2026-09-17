@@ -1,0 +1,11 @@
+# Résultats de compilation .NET
+bin/
+obj/
+
+# Visual Studio / VS Code
+.vs/
+*.user
+*.suo
+
+# Divers
+*.log
