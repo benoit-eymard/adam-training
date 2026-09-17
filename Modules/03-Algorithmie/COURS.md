@@ -295,7 +295,142 @@ il te faut un troisième verre.
 
 ---
 
-## 6. Les chaînes sont des suites de caractères
+## 6. La récursivité : une méthode qui s'appelle elle-même
+
+Voilà l'idée la plus déroutante de ce module — et l'une des plus puissantes de
+toute la programmation.
+
+**Une méthode a le droit de s'appeler elle-même.**
+
+```csharp
+static long Factorielle(int n)
+{
+    if (n <= 1)                          // le CAS DE BASE : on s'arrête
+    {
+        return 1;
+    }
+    return n * Factorielle(n - 1);       // le CAS RÉCURSIF : on s'appelle
+}
+```
+
+`Factorielle(5)` vaut `5 × 4 × 3 × 2 × 1 = 120`. Et cette méthode de 5 lignes le
+calcule sans la moindre boucle.
+
+### Comment ça marche vraiment
+
+Déroulons `Factorielle(4)` pas à pas. Chaque appel **met le précédent en
+attente** :
+
+```
+Factorielle(4)  →  4 * Factorielle(3)        ⏸️ en attente
+                        Factorielle(3)  →  3 * Factorielle(2)   ⏸️
+                                                Factorielle(2)  →  2 * Factorielle(1)  ⏸️
+                                                                        Factorielle(1)  →  1   ✅ CAS DE BASE
+                                                2 * 1 = 2       ✅ on remonte
+                                        3 * 2 = 6               ✅
+                        4 * 6 = 24                              ✅
+```
+
+On **descend** jusqu'au cas de base, puis on **remonte** en calculant.
+
+> 🐞 **Regarde-le en vrai.** Pose un point d'arrêt dans `Factorielle` et ouvre le
+> panneau **Call Stack** ([DEBUG.md](../../DEBUG.md)) : tu verras les appels
+> empilés les uns sur les autres. C'est le meilleur moyen de comprendre la
+> récursivité — bien mieux que n'importe quel dessin.
+
+### ⚠️ Les deux règles vitales
+
+Toute méthode récursive a **obligatoirement** ces deux morceaux :
+
+| Morceau | Rôle | Si tu l'oublies |
+|---------|------|-----------------|
+| **Le cas de base** | quand s'arrêter | 💥 `StackOverflowException` |
+| **Le cas récursif** | se rappeler sur un problème **plus petit** | 💥 `StackOverflowException` |
+
+**Le cas de base d'abord, toujours.** Si tu écris le `return n * Factorielle(n-1)`
+avant le `if`, ta méthode ne s'arrêtera jamais.
+
+Et le cas récursif doit **se rapprocher** du cas de base. `Factorielle(n - 1)`
+descend vers 1 : bien. `Factorielle(n)` ou `Factorielle(n + 1)` : catastrophe.
+
+```csharp
+static int Boucle(int n)
+{
+    return Boucle(n - 1);    // 💥 pas de cas de base → crash immédiat
+}
+```
+
+### 💥 Le StackOverflowException
+
+Chaque appel en attente occupe de la place dans une zone mémoire appelée **la
+pile** (*stack*). Elle n'est pas infinie : environ **10 000 appels** et elle
+déborde.
+
+C'est une des rares erreurs que `try/catch` **ne peut pas** rattraper : le
+programme meurt sur le coup. Quand tu la vois, c'est presque toujours un cas de
+base manquant ou mal écrit.
+
+### Récursivité ou boucle ?
+
+Tout ce qui s'écrit avec une récursion s'écrit aussi avec une boucle, et
+inversement.
+
+```csharp
+// Récursif : élégant, proche de la définition mathématique
+static long Factorielle(int n) => n <= 1 ? 1 : n * Factorielle(n - 1);
+
+// Itératif : plus rapide, ne remplit pas la pile
+static long FactorielleBoucle(int n)
+{
+    long resultat = 1;
+    for (int i = 2; i <= n; i++) resultat *= i;
+    return resultat;
+}
+```
+
+| | Récursif | Boucle |
+|---|---|---|
+| Lisibilité | ✨ souvent magnifique | correcte |
+| Vitesse | plus lent | plus rapide |
+| Mémoire | remplit la pile | constante |
+| Sur les **arbres** | 🏆 imbattable | pénible |
+
+**Quand la récursivité gagne vraiment** : quand le problème est lui-même
+récursif. Parcourir des dossiers (un dossier contient des dossiers), explorer un
+arbre généalogique, analyser du JSON (un objet contient des objets), trouver la
+sortie d'un labyrinthe. En boucle, ce sont des cauchemars ; en récursif, dix
+lignes.
+
+### Le piège de Fibonacci
+
+```csharp
+static long Fibonacci(int n)
+{
+    if (n <= 1) return n;                              // 0→0, 1→1
+    return Fibonacci(n - 1) + Fibonacci(n - 2);        // deux appels !
+}
+```
+
+C'est la définition mathématique exacte, et c'est magnifique. Mais **deux**
+appels récursifs, c'est un arbre qui double à chaque étage :
+
+| `n` | Nombre d'appels |
+|-----|-----------------|
+| 10 | ~177 |
+| 30 | ~2,7 millions |
+| 50 | ~40 **milliards** (des jours de calcul) |
+
+`Fibonacci(5)` calcule `Fibonacci(3)` **deux fois**, `Fibonacci(2)` **trois
+fois**… On recalcule sans arrêt les mêmes choses.
+
+> 💡 La solution s'appelle la **mémoïsation** : garder les résultats déjà
+> calculés dans un `Dictionary` (module 6 !) pour ne jamais refaire deux fois le
+> même travail. Avec ça, `Fibonacci(50)` devient instantané. C'est une des idées
+> les plus rentables de l'informatique.
+
+---
+
+## 7. Les chaînes sont des suites de caractères
 
 ```csharp
 string mot = "Kaelis";
@@ -330,7 +465,7 @@ mot.Substring(1, 3)    // "ael"  (à partir de l'index 1, sur 3 caractères)
 
 ---
 
-## 7. Méthode pour attaquer un problème dur
+## 8. Méthode pour attaquer un problème dur
 
 Quand tu bloques, applique cette recette :
 
@@ -359,6 +494,8 @@ moi » du code qui marche vraiment.
 | Le parcourir en lecture | `foreach (int x in t)` |
 | Échanger deux valeurs | `int tmp = a; a = b; b = tmp;` |
 | Dire « pas trouvé » | `return -1;` |
+| Une méthode récursive | un **cas de base** (`if`) + un **cas récursif** |
+| Voir la cascade d'appels | panneau **Call Stack** du débogueur |
 
 ---
 

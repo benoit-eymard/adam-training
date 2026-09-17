@@ -126,3 +126,79 @@ public class Exercice7_EstPalindrome
         Assert.Equal(attendu, Exo.EstPalindrome(texte));
     }
 }
+
+public class Exercice8_Factorielle
+{
+    [Theory]
+    [InlineData(0, 1L)]          // 0! vaut 1 par convention
+    [InlineData(1, 1L)]
+    [InlineData(2, 2L)]
+    [InlineData(5, 120L)]
+    [InlineData(10, 3628800L)]
+    [InlineData(20, 2432902008176640000L)]   // d'ou le "long" !
+    public void Factorielle_correcte(int n, long attendu)
+    {
+        Assert.Equal(attendu, Exo.Factorielle(n));
+    }
+}
+
+public class Exercice9_Fibonacci
+{
+    [Theory]
+    [InlineData(0, 0L)]
+    [InlineData(1, 1L)]
+    [InlineData(2, 1L)]
+    [InlineData(3, 2L)]
+    [InlineData(7, 13L)]
+    [InlineData(10, 55L)]
+    [InlineData(20, 6765L)]
+    public void Fibonacci_correct(int n, long attendu)
+    {
+        Assert.Equal(attendu, Exo.Fibonacci(n));
+    }
+
+    [Fact]
+    public void Chaque_terme_est_la_somme_des_deux_precedents()
+    {
+        for (int n = 2; n <= 15; n++)
+        {
+            Assert.Equal(Exo.Fibonacci(n - 1) + Exo.Fibonacci(n - 2), Exo.Fibonacci(n));
+        }
+    }
+}
+
+public class Exercice10_SommeDesChiffres
+{
+    [Theory]
+    [InlineData(0, 0)]
+    [InlineData(7, 7)]
+    [InlineData(10, 1)]
+    [InlineData(123, 6)]
+    [InlineData(9999, 36)]
+    [InlineData(1000000, 1)]
+    public void Somme_correcte(int n, int attendu)
+    {
+        Assert.Equal(attendu, Exo.SommeDesChiffres(n));
+    }
+}
+
+public class Exercice11_InverserTexte
+{
+    [Theory]
+    [InlineData("", "")]
+    [InlineData("a", "a")]
+    [InlineData("ab", "ba")]
+    [InlineData("abc", "cba")]
+    [InlineData("Kaelis", "sileaK")]
+    [InlineData("kayak", "kayak")]      // un palindrome, forcement
+    public void Inverse_correctement(string texte, string attendu)
+    {
+        Assert.Equal(attendu, Exo.InverserTexte(texte));
+    }
+
+    [Fact]
+    public void Inverser_deux_fois_redonne_l_original()
+    {
+        Assert.Equal("Bonjour", Exo.InverserTexte(Exo.InverserTexte("Bonjour")));
+    }
+}

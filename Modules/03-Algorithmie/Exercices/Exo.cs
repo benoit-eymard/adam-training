@@ -173,4 +173,112 @@ public static class Exo
         // TODO:
         return false;
     }
+
+    // ═══════════════════════════════════════════════════════════
+    //  PARTIE B — LA RÉCURSIVITÉ
+    //
+    //  Une méthode qui s'appelle elle-même. Chacune de ces méthodes
+    //  a besoin de DEUX choses :
+    //     1. un CAS DE BASE  -> quand s'arrêter (sinon 💥 crash)
+    //     2. un CAS RÉCURSIF -> se rappeler sur un problème PLUS PETIT
+    //
+    //  🐞 Pose un point d'arrêt et regarde le panneau Call Stack :
+    //     tu verras les appels s'empiler. Voir DEBUG.md.
+    // ═══════════════════════════════════════════════════════════
+
+    // ───────────────────────────────────────────────────────────────
+    //  EXERCICE 8 ⭐⭐ — La factorielle
+    //
+    //  n! = n × (n-1) × (n-2) × ... × 1
+    //
+    //  Factorielle(0) → 1      (par convention mathématique)
+    //  Factorielle(1) → 1
+    //  Factorielle(5) → 120    (5 × 4 × 3 × 2 × 1)
+    //
+    //  ⚠️ INTERDIT d'utiliser une boucle — c'est tout l'exercice !
+    //
+    //  💡 Le squelette de TOUTE méthode récursive :
+    //       if (cas de base) { return quelque chose; }
+    //       return ... Factorielle(plus petit) ...;
+    //
+    //  ⚠️ Le type de retour est long (pas int) : 20! dépasse
+    //     largement la capacité d'un int.
+    // ───────────────────────────────────────────────────────────────
+    public static long Factorielle(int n)
+    {
+        // TODO: le cas de base, PUIS le cas récursif
+        return 0;
+    }
+
+
+    // ───────────────────────────────────────────────────────────────
+    //  EXERCICE 9 ⭐⭐ — La suite de Fibonacci
+    //
+    //  Chaque nombre est la somme des deux précédents :
+    //      0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, ...
+    //
+    //  Fibonacci(0)  → 0
+    //  Fibonacci(1)  → 1
+    //  Fibonacci(2)  → 1    (0 + 1)
+    //  Fibonacci(10) → 55
+    //
+    //  💡 Ici il y a DEUX cas de base (0 et 1), et le cas récursif
+    //     fait DEUX appels.
+    //
+    //  ⚠️ Ne teste pas Fibonacci(50) : cette version ferait environ
+    //     40 MILLIARDS d'appels. Relis la fin de la section 6 du
+    //     COURS pour comprendre pourquoi. 😅
+    // ───────────────────────────────────────────────────────────────
+    public static long Fibonacci(int n)
+    {
+        // TODO:
+        return 0;
+    }
+
+
+    // ───────────────────────────────────────────────────────────────
+    //  EXERCICE 10 ⭐⭐⭐ — La somme des chiffres
+    //
+    //  Additionne les chiffres d'un nombre, un par un.
+    //
+    //  SommeDesChiffres(7)    → 7
+    //  SommeDesChiffres(123)  → 6     (1 + 2 + 3)
+    //  SommeDesChiffres(9999) → 36
+    //  SommeDesChiffres(0)    → 0
+    //
+    //  💡 Le modulo et la division entière du module 1 reviennent !
+    //       123 % 10  vaut 3    -> le dernier chiffre
+    //       123 / 10  vaut 12   -> tout le reste
+    //
+    //  💡 Donc : dernier chiffre + SommeDesChiffres(le reste)
+    //  💡 Le cas de base : quand il ne reste plus rien (n vaut 0).
+    // ───────────────────────────────────────────────────────────────
+    public static int SommeDesChiffres(int n)
+    {
+        // TODO:
+        return 0;
+    }
+
+
+    // ───────────────────────────────────────────────────────────────
+    //  EXERCICE 11 ⭐⭐⭐ — Inverser un texte, en récursif
+    //
+    //  InverserTexte("abc")   → "cba"
+    //  InverserTexte("a")     → "a"
+    //  InverserTexte("")      → ""
+    //  InverserTexte("Kaelis")→ "sileaK"
+    //
+    //  ⚠️ INTERDIT : les boucles, et Array.Reverse.
+    //
+    //  💡 L'idée : le dernier caractère, PUIS l'inverse de tout le reste.
+    //  💡 Deux outils sur les chaînes :
+    //       texte[texte.Length - 1]          -> le dernier caractère
+    //       texte.Substring(0, texte.Length - 1) -> tout sauf le dernier
+    //  💡 Le cas de base : une chaîne vide s'inverse en chaîne vide.
+    // ───────────────────────────────────────────────────────────────
+    public static string InverserTexte(string texte)
+    {
+        // TODO:
+        return "";
+    }
 }

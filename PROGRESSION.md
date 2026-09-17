@@ -62,7 +62,11 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [ ] Exo 5 ⭐⭐ Inverser un tableau
 - [ ] Exo 6 ⭐⭐⭐ Le tri à bulles
 - [ ] Exo 7 ⭐⭐⭐ Le palindrome
-- [ ] **Les 49 tests passent**
+- [ ] Exo 8 ⭐⭐ La factorielle (récursivité)
+- [ ] Exo 9 ⭐⭐ Fibonacci (récursivité)
+- [ ] Exo 10 ⭐⭐⭐ La somme des chiffres (récursivité)
+- [ ] Exo 11 ⭐⭐⭐ Inverser un texte (récursivité)
+- [ ] **Les 76 tests passent**
 - [ ] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI — Le Morpion
 - [ ] 🔍 Pull Request ouverte, relue et fermée

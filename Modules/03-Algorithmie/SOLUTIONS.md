@@ -301,6 +301,208 @@ return propre == new string(lettres);
 
 ---
 
+---
+
+# 🔁 Partie B — La récursivité
+
+## Exercice 8 — La factorielle
+
+```csharp
+public static long Factorielle(int n)
+{
+    if (n <= 1)
+    {
+        return 1;              // CAS DE BASE
+    }
+    return n * Factorielle(n - 1);   // CAS RÉCURSIF
+}
+```
+
+**Le squelette de toute méthode récursive**, et il ne change jamais :
+
+1. le **cas de base** en premier — sinon on ne s'arrête jamais
+2. le **cas récursif** ensuite, sur un problème **plus petit**
+
+**Pourquoi `n <= 1` et pas `n == 1` ?** Pour que `Factorielle(0)` réponde `1`
+(la convention mathématique) au lieu de partir vers l'infini négatif. Un cas de
+base trop étroit est une cause classique de `StackOverflowException`.
+
+> 💡 **Le raisonnement à adopter** — et il est contre-intuitif au début :
+> **fais confiance à la récursion.** Quand tu écris `n * Factorielle(n - 1)`,
+> ne cherche pas à dérouler dans ta tête les 5 appels suivants. Suppose
+> simplement que `Factorielle(n - 1)` te donne la bonne réponse, et demande-toi
+> juste : « qu'est-ce que j'en fais ? ». Si le cas de base est correct et que tu
+> te rapproches de lui, ça marche.
+
+---
+
+## Exercice 9 — Fibonacci
+
+```csharp
+public static long Fibonacci(int n)
+{
+    if (n <= 1)
+    {
+        return n;              // DEUX cas de base d'un coup : 0→0 et 1→1
+    }
+    return Fibonacci(n - 1) + Fibonacci(n - 2);   // DEUX appels
+}
+```
+
+`return n` règle élégamment les deux cas de base à la fois : pour `n = 0` il
+rend `0`, pour `n = 1` il rend `1`. Exactement ce qu'on veut.
+
+### ⚠️ Cette version est un piège magnifique
+
+Elle est la traduction **exacte** de la définition mathématique. Elle est
+limpide. Et elle est **catastrophiquement lente**.
+
+Regarde `Fibonacci(5)` :
+
+```
+                    F(5)
+              ┌──────┴──────┐
+            F(4)           F(3)
+          ┌──┴──┐        ┌──┴──┐
+        F(3)   F(2)    F(2)   F(1)
+       ┌─┴─┐   ┌─┴─┐   ┌─┴─┐
+     F(2) F(1) F(1) F(0) F(1) F(0)
+```
+
+`F(3)` est calculé **2 fois**, `F(2)` **3 fois**, `F(1)` **5 fois**. Et ça
+double à chaque étage :
+
+| `n` | Appels |
+|-----|--------|
+| 10 | ~177 |
+| 30 | ~2,7 millions |
+| 40 | ~330 millions |
+| 50 | ~40 **milliards** |
+
+**La leçon** : élégant ne veut pas dire efficace. Un code magnifique peut être
+inutilisable.
+
+### La solution : la mémoïsation
+
+On garde ce qu'on a déjà calculé (module 6 : `Dictionary` !) :
+
+```csharp
+private static Dictionary<int, long> _memo = new Dictionary<int, long>();
+
+public static long FibonacciRapide(int n)
+{
+    if (n <= 1) return n;
+    if (_memo.ContainsKey(n)) return _memo[n];       // déjà calculé ?
+
+    long resultat = FibonacciRapide(n - 1) + FibonacciRapide(n - 2);
+    _memo[n] = resultat;                             // on retient
+    return resultat;
+}
+```
+
+`Fibonacci(50)` passe de **plusieurs jours** à **instantané**. Trois lignes
+ajoutées.
+
+> 🧠 La mémoïsation est une des idées les plus rentables de l'informatique. Elle
+> porte un nom savant — *programmation dynamique* — mais l'idée tient en une
+> phrase : **ne calcule jamais deux fois la même chose**.
+
+---
+
+## Exercice 10 — La somme des chiffres
+
+```csharp
+public static int SommeDesChiffres(int n)
+{
+    if (n == 0)
+    {
+        return 0;
+    }
+    return n % 10 + SommeDesChiffres(n / 10);
+}
+```
+
+Le modulo et la division entière du **module 1** reviennent, et ils font
+exactement le travail :
+
+| Étape | `n` | `n % 10` (le dernier chiffre) | `n / 10` (le reste) |
+|-------|-----|------------------------------|---------------------|
+| 1 | 123 | **3** | 12 |
+| 2 | 12 | **2** | 1 |
+| 3 | 1 | **1** | 0 |
+| 4 | 0 | cas de base → 0 | — |
+
+Total : `3 + 2 + 1 + 0` = **6** ✅
+
+`n / 10` rapproche bien du cas de base : le nombre perd un chiffre à chaque
+appel. Un nombre à 9 chiffres, c'est 10 appels. Aucun risque de débordement.
+
+> 💡 Remarque que `SommeDesChiffres(0)` rend `0` — et c'est correct, sans aucun
+> cas particulier à ajouter. Quand le cas de base est bien choisi, les cas
+> limites se règlent tout seuls. On l'a déjà vu au module 2 avec le compte à
+> rebours. 🎁
+
+---
+
+## Exercice 11 — Inverser un texte
+
+```csharp
+public static string InverserTexte(string texte)
+{
+    if (texte.Length == 0)
+    {
+        return "";
+    }
+    return texte[texte.Length - 1]
+         + InverserTexte(texte.Substring(0, texte.Length - 1));
+}
+```
+
+L'idée : **le dernier caractère d'abord**, puis l'inverse de tout le reste.
+
+```
+InverserTexte("abc")
+   = 'c' + InverserTexte("ab")
+   = 'c' + ('b' + InverserTexte("a"))
+   = 'c' + ('b' + ('a' + InverserTexte("")))
+   = 'c' + ('b' + ('a' + ""))
+   = "cba"   ✅
+```
+
+**Deux pièges classiques :**
+
+- `texte[texte.Length - 1]` : n'oublie pas le `- 1`. Le dernier index est
+  `Length - 1`, jamais `Length`.
+- `Substring(0, texte.Length - 1)` : « à partir de 0, sur `Length - 1`
+  caractères » — donc tout sauf le dernier.
+
+> ⚠️ En vrai, on n'inverse pas une chaîne comme ça : chaque appel **fabrique une
+> nouvelle chaîne** (les `string` sont immuables, module 3 section 7), donc
+> inverser un texte de 1000 caractères en crée 1000. La version à deux index de
+> l'exercice 5 est bien plus efficace.
+>
+> Mais comme exercice de récursivité sur les chaînes, c'est parfait. **Savoir
+> quand ne PAS utiliser un outil fait partie du métier.**
+
+---
+
+## ✅ Ce que la récursivité t'a appris
+
+- Un problème peut se définir **en fonction de lui-même**
+- Il faut **toujours** un cas de base, et **toujours** se rapprocher de lui
+- La pile d'appels est **limitée** (~10 000 appels)
+- Élégant ≠ efficace (Fibonacci !)
+- **Fais confiance à la récursion** : suppose que l'appel plus petit marche
+
+Tu la retrouveras partout : parcourir des dossiers, explorer un arbre, lire du
+JSON imbriqué, les algorithmes de tri rapides (*quicksort*, *mergesort*), et
+l'intelligence artificielle des jeux.
+
+🐞 **Et si tu es perdu** : point d'arrêt + panneau **Call Stack**. Voir la
+cascade d'appels empilée vaut tous les schémas du monde.
+
+---
+
 ## ✅ Bilan du module
 
 Tu sais maintenant **découper un problème** et manipuler des **collections de
