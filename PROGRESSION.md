@@ -15,15 +15,15 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 
 > **Badge : Hello World** — tu as fait parler une machine.
 
-- [ ] J'ai lu le COURS
-- [ ] J'ai lancé la démo (`dotnet run --project Exercices`)
-- [ ] Exo 1 ⭐ Se présenter
-- [ ] Exo 2 ⭐ La calculatrice
-- [ ] Exo 3 ⭐⭐ Points de vie
-- [ ] Exo 4 ⭐⭐ Fiche de personnage
-- [ ] Exo 5 ⭐⭐⭐ Convertisseur de pièces
-- [ ] **Les 20 tests passent** (`dotnet test Tests`)
-- [ ] J'ai lu les SOLUTIONS
+- [x] J'ai lu le COURS
+- [x] J'ai lancé la démo (`dotnet run --project Exercices`)
+- [x] Exo 1 ⭐ Se présenter
+- [x] Exo 2 ⭐ La calculatrice
+- [x] Exo 3 ⭐⭐ Points de vie
+- [x] Exo 4 ⭐⭐ Fiche de personnage
+- [x] Exo 5 ⭐⭐⭐ Convertisseur de pièces
+- [x] **Les 20 tests passent** (`dotnet test Tests`)
+- [x] J'ai lu les SOLUTIONS
 - [ ] 🏆 DÉFI — Générateur de fiche de personnage
 - [ ] 🔍 Pull Request ouverte, relue et fermée
 
