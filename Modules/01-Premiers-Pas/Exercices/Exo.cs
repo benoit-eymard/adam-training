@@ -97,7 +97,7 @@ public static class Exo
     public static string FicheDePersonnage(string nom, string classe, int niveau)
     {
         // TODO:
-        return "";
+        return $"Nom    : {nom}\nClasse : {classe}\nNiveau : {niveau}";
     }
 
 
@@ -122,11 +122,11 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static string ConvertirEnOr(int cuivre)
     {
-        // TODO: étape 1 — combien de pièces d'argent au total ?
-        // TODO: étape 2 — combien de cuivre reste-t-il ?
-        // TODO: étape 3 — dans ces pièces d'argent, combien d'or ?
-        // TODO: étape 4 — combien d'argent reste-t-il ?
+        int argent = cuivre / 100; // TODO: étape 1 — combien de pièces d'argent au total ?
+        int cuivreRestant = cuivre % 100;// TODO: étape 2 — combien de cuivre reste-t-il ?
+        int or = argent / 100;// TODO: étape 3 — dans ces pièces d'argent, combien d'or ?
+        int argentRestant = argent % 100;// TODO: étape 4 — combien d'argent reste-t-il ?
         // TODO: étape 5 — assemble la phrase avec $"..."
-        return "";
+        return $"{or} or, {argentRestant} argent, {cuivreRestant} cuivre";
     }
 }
