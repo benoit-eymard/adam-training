@@ -24,8 +24,8 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static string SePresenter(string prenom, int age)
     {
-        // TODO: remplace cette ligne
-        return "pas encore fait";
+       
+        return $"Je m'appelle {prenom} et j'ai {age} ans.";
     }
 
 
@@ -37,7 +37,7 @@ public static class Exo
     public static int Additionner(int a, int b)
     {
         // TODO: retourne la somme de a et b
-        return 0;
+        return a + b;
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public static class Exo
     {
         // TODO: additionne les trois notes, puis divise par 3.0
         //       (n'oublie pas les parenthèses autour de l'addition !)
-        return 0;
+        return (note1 + note2+note3)/3.0;
     }
 
 
@@ -74,7 +74,7 @@ public static class Exo
     public static int PointsDeVieRestants(int pointsDeVie, int degats)
     {
         // TODO:
-        return 0;
+        return  Math.Max(0, pointsDeVie - degats);
     }
 
 
