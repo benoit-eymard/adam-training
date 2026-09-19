@@ -24,8 +24,8 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static string SePresenter(string prenom, int age)
     {
-        // TODO: remplace cette ligne
-        return "pas encore fait";
+       
+        return $"Je m'appelle {prenom} et j'ai {age} ans.";
     }
 
 
@@ -37,7 +37,7 @@ public static class Exo
     public static int Additionner(int a, int b)
     {
         // TODO: retourne la somme de a et b
-        return 0;
+        return a + b;
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public static class Exo
     {
         // TODO: additionne les trois notes, puis divise par 3.0
         //       (n'oublie pas les parenthèses autour de l'addition !)
-        return 0;
+        return (note1 + note2+note3)/3.0;
     }
 
 
@@ -74,7 +74,7 @@ public static class Exo
     public static int PointsDeVieRestants(int pointsDeVie, int degats)
     {
         // TODO:
-        return 0;
+        return  Math.Max(0, pointsDeVie - degats);
     }
 
 
@@ -97,7 +97,7 @@ public static class Exo
     public static string FicheDePersonnage(string nom, string classe, int niveau)
     {
         // TODO:
-        return "";
+        return $"Nom    : {nom}\nClasse : {classe}\nNiveau : {niveau}";
     }
 
 
@@ -122,11 +122,11 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static string ConvertirEnOr(int cuivre)
     {
-        // TODO: étape 1 — combien de pièces d'argent au total ?
-        // TODO: étape 2 — combien de cuivre reste-t-il ?
-        // TODO: étape 3 — dans ces pièces d'argent, combien d'or ?
-        // TODO: étape 4 — combien d'argent reste-t-il ?
+        int argent = cuivre / 100; // TODO: étape 1 — combien de pièces d'argent au total ?
+        int cuivreRestant = cuivre % 100;// TODO: étape 2 — combien de cuivre reste-t-il ?
+        int or = argent / 100;// TODO: étape 3 — dans ces pièces d'argent, combien d'or ?
+        int argentRestant = argent % 100;// TODO: étape 4 — combien d'argent reste-t-il ?
         // TODO: étape 5 — assemble la phrase avec $"..."
-        return "";
+        return $"{or} or, {argentRestant} argent, {cuivreRestant} cuivre";
     }
 }
