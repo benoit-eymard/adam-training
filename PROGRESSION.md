@@ -24,8 +24,8 @@ Coche les cases au fur et à mesure. Dans VS Code, remplace `[ ]` par `[x]`.
 - [x] Exo 5 ⭐⭐⭐ Convertisseur de pièces
 - [x] **Les 20 tests passent** (`dotnet test Tests`)
 - [x] J'ai lu les SOLUTIONS
-- [ ] 🏆 DÉFI — Générateur de fiche de personnage
-- [ ] 🔍 Pull Request ouverte, relue et fermée
+- [x] 🏆 DÉFI — Générateur de fiche de personnage
+- [x] 🔍 Pull Request ouverte, relue et fermée
 
 ---
 
