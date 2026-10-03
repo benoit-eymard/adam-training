@@ -22,8 +22,8 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static bool EstMajeur(int age)
     {
-        // TODO:
-        return false;
+        
+        return age >= 18;
     }
 
 
@@ -38,11 +38,31 @@ public static class Exo
     //     - avec des if/else if
     //     - avec Math.Max emboîté : Math.Max(a, Math.Max(b, c))
     // ───────────────────────────────────────────────────────────────
-    public static int LePlusGrand(int a, int b, int c)
+     public static int LePlusGrand(int a, int b, int c)
+{
+            int leGrand = c;
+        if (a > b)
     {
-        // TODO:
-        return 0;
+            if (a > c)
+            {
+            leGrand = a;
+            }
     }
+        
+        else if (b > a)
+        {
+            if (b > c)
+            {
+             leGrand = b;
+            }
+        }
+         
+        
+          return leGrand;
+            
+        
+     
+ }
 
 
     // ───────────────────────────────────────────────────────────────
@@ -66,8 +86,26 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static string NoteEnLettre(double note)
     {
-        // TODO:
-        return "";
+        if (note >= 16)
+        {
+            return"A";
+        }// TODO:
+        else if (note >= 14)
+        {
+            return"B";
+        }// TODO:if (note > 16)
+        else if (note >=12)
+        {
+            return"C";
+        }// TODO:if (note > 16) if (note > 16)
+         else if (note >= 10)
+        {
+            return"D";
+        } else if (note >= 8)
+        {
+            return"E";
+        } 
+        else return "F";
     }
 
 
@@ -85,8 +123,16 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static string CompteARebours(int depart)
     {
-        // TODO:
-        return "";
+        string resulte = "";
+        for (int i = depart; i >= 1; i--)
+        {
+          resulte += i;
+          if (i>=1)
+            {
+             resulte += ", ";
+            }  
+        }// TODO:
+        return $"{resulte}Décollage !";
     }
 
 
@@ -109,7 +155,10 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static string TableDeMultiplication(int nombre)
     {
-        // TODO:
+        for(int i = 0; i<= 10 ; i++)
+        {
+            
+        }// TODO:
         return "";
     }
 
