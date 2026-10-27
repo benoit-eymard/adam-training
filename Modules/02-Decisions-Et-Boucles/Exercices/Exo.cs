@@ -129,10 +129,10 @@ public static class Exo
           resulte += i;
           if (i>=1)
             {
-             resulte += ", ";
+         resulte += ", ";
             }  
-        }// TODO:
-        return $"{resulte}Décollage !";
+        } //TODO:
+     return $"{resulte}Décollage !";
     }
 
 
@@ -155,11 +155,19 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static string TableDeMultiplication(int nombre)
     {
-        for(int i = 0; i<= 10 ; i++)
+        string result = "";
+        
+        for(int i = 1; i<= 10 ; i++)
         {
-            
-        }// TODO:
-        return "";
+        int resultat = nombre * i ;
+        result += $"{nombre} x {i} = {resultat}";
+        if (i<= 9)
+            {
+         result += "\n";
+            }  
+           
+        }
+        return $"{result}";
     }
 
 
@@ -187,8 +195,22 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static string FizzBuzz(int nombre)
     {
-        // TODO:
-        return "";
+        if (nombre % 3 == 0 && nombre % 5 == 0)
+        {
+            return"FizzBuzz";
+        }// TODO:
+        else if (nombre % 5 == 0)
+        {
+            return"Buzz";
+        } 
+        else if (nombre % 3== 0)
+        {
+            return"Fizz";
+        }// TODO:if (note > 16)
+       
+        else return $"{nombre}";
+       
+        
     }
 
 
@@ -214,9 +236,10 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static string BarreDeVie(int pointsDeVie, int pointsDeVieMax)
     {
-        // TODO: étape 1 — calcule le nombre de segments pleins
-        // TODO: étape 2 — construis la barre avec des boucles
-        // TODO: étape 3 — assemble "[barre] pv/pvMax"
-        return "";
+        int proportionSur10 = pointsDeVie * 10 / pointsDeVieMax ;
+        string segmentsPleins = new string  ('#' , proportionSur10);
+        int nbTirets = 10 - proportionSur10 ;
+        string tirets = new string  ('-' , nbTirets);
+        return $"[{segmentsPleins}{tirets}] {pointsDeVie}/{pointsDeVieMax}";
     }
 }

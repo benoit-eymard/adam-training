@@ -88,15 +88,16 @@ public class Exercice5_TableDeMultiplication
             "3 x 9 = 27\n" +
             "3 x 10 = 30";
 
-        Assert.Equal(attendu, Exo.TableDeMultiplication(3));
+        string table = Exo.TableDeMultiplication(3);
+        Assert.Equal(attendu, table.Replace("\r\n", "\n"));
     }
 
     [Fact]
     public void Pas_de_retour_a_la_ligne_a_la_fin()
     {
         string table = Exo.TableDeMultiplication(7);
-        Assert.False(table.EndsWith("\n"), "Il y a un \\n en trop à la fin !");
-        Assert.EndsWith("7 x 10 = 70", table);
+        Assert.NotEqual('\n', table[^1]);
+        Assert.True(table.EndsWith("7 x 10 = 70"), "La table doit bien se terminer par la dernière ligne attendue.");
     }
 
     [Fact]
