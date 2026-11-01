@@ -27,8 +27,12 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static int Somme(int[] nombres)
     {
-        // TODO:
-        return 0;
+        int total = 0;
+       foreach(int add in nombres)
+        {
+         total += add;   
+        }
+        return total;
     }
 
 
@@ -47,8 +51,15 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static int Maximum(int[] nombres)
     {
-        // TODO:
-        return 0;
+        int maximum = nombres[0];
+        for(int i = 0 ; i < nombres.Length ; i++)
+        {
+            if (nombres[i] > maximum)
+            {
+                maximum = nombres[i];
+            }
+        }
+        return maximum;
     }
 
 
@@ -66,10 +77,17 @@ public static class Exo
     //     (double)Somme(notes) / notes.Length
     //  ⚠️ Si le tableau est vide, retourne 0 SANS faire la division.
     // ───────────────────────────────────────────────────────────────
-    public static double Moyenne(int[] notes)
+        public static double Moyenne(int[] notes)
     {
-        // TODO:
-        return 0;
+        if (Somme(notes)!= 0)
+        {
+            return (double)Somme(notes) / notes.Length;
+        }
+        else
+        {
+            return 0.0; 
+        }
+       
     }
 
 
@@ -89,8 +107,14 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static int IndexDe(int[] tableau, int valeur)
     {
-        // TODO:
-        return 0;
+        for(int i =0 ; i < tableau.Length ;i++)
+        {
+            if(tableau[i] == valeur)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
 
@@ -110,9 +134,14 @@ public static class Exo
     //     te convaincre.
     // ───────────────────────────────────────────────────────────────
     public static int[] Inverser(int[] tableau)
-    {
-        // TODO:
-        return new int[0];
+    {   int y = tableau.Length - 1;
+        int [] tab = new int [tableau.Length] ; 
+        for (int i = 0 ; i < tableau.Length ;i++)
+        {
+         tab[y] = tableau[i];
+         y -= 1;
+        }
+        return tab;
     }
 
 
@@ -140,8 +169,22 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static int[] Trier(int[] tableau)
     {
-        // TODO:
-        return new int[0];
+        int [] trié = (int[])tableau.Clone();
+        for (int tour = 0; tour < trié.Length - 1; tour++)
+{
+    for (int i = 0; i < trié.Length - 1; i++)
+    {
+        if (trié[i] > trié[i + 1])
+        {
+            
+            int temporaire = trié[i];
+            trié[i] = trié[i + 1];
+           trié[i + 1] = temporaire;
+        }
+    }
+}
+
+        return trié;
     }
 
 
@@ -170,8 +213,22 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static bool EstPalindrome(string texte)
     {
-        // TODO:
-        return false;
+       string propre = texte.ToLower().Replace(" ", "");
+
+    int gauche = 0;
+    int droite = propre.Length - 1;
+
+    while (gauche < droite)
+    {
+        if (propre[gauche] != propre[droite])
+        {
+            return false;      // une seule différence suffit
+        }
+        gauche++;
+        droite--;
+    }
+
+    return true;            
     }
 
     // ═══════════════════════════════════════════════════════════
@@ -206,8 +263,11 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static long Factorielle(int n)
     {
-        // TODO: le cas de base, PUIS le cas récursif
-        return 0;
+       if (n <= 1)
+        {
+            return 1;
+        }
+        return n * Factorielle (n -1);
     }
 
 
@@ -231,8 +291,8 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static long Fibonacci(int n)
     {
-        // TODO:
-        return 0;
+        if(n<=1) return n;
+        return Fibonacci(n-1)+Fibonacci(n-2);
     }
 
 
@@ -254,9 +314,13 @@ public static class Exo
     //  💡 Le cas de base : quand il ne reste plus rien (n vaut 0).
     // ───────────────────────────────────────────────────────────────
     public static int SommeDesChiffres(int n)
+    { 
+       if (n == 0)
     {
-        // TODO:
         return 0;
+    }
+    return n % 10 + SommeDesChiffres(n / 10);
+    
     }
 
 
@@ -278,7 +342,13 @@ public static class Exo
     // ───────────────────────────────────────────────────────────────
     public static string InverserTexte(string texte)
     {
-        // TODO:
+       if (texte.Length == 0)
+    {
         return "";
     }
+    return texte[texte.Length - 1]
+         + InverserTexte(texte.Substring(0, texte.Length - 1));
 }
+       
+    }
+
